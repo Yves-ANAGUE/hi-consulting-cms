@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {{balisesMeta}}
+  <link rel="icon" href="/static/images/logo_HICI.jpg">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script type="application/ld+json">{{schemaLocalBusiness}}</script>
+</head>
+<body>
+  {{> _entete.html}}
+
+  <main>
+    <section class="section-heros">
+      <div class="motif-grille" aria-hidden="true"></div>
+      <div class="orbe orbe-1" aria-hidden="true"></div>
+      <div class="orbe orbe-2" aria-hidden="true"></div>
+      <div class="conteneur heros-contenu">
+        <div class="heros-marque">
+          <img src="{{urlLogo}}" alt="HI CONSULTING IMMIGRATION" onerror="this.onerror=null;this.src='/static/images/logo_HICI.jpg';">
+          <span>HI CONSULTING<small>IMMIGRATION</small></span>
+        </div>
+        <span class="heros-etiquette">Réussir au Canada</span>
+        <h1><span id="texteMachineAEcrire" class="machine-a-ecrire"></span></h1>
+        <p class="heros-slogan" id="texteSloganPrincipal" data-cle-i18n="accueil_slogan">
+          Nous vous garantissons un service de qualité pour la réussite de votre projet d'immigration.
+        </p>
+        <div class="heros-actions">
+          <a href="/services" class="bouton bouton-primaire" data-cle-i18n="accueil_bouton_services">Découvrir nos services</a>
+          <a href="/contact" class="bouton bouton-secondaire" data-cle-i18n="accueil_bouton_evaluation">Évaluation gratuite</a>
+        </div>
+      </div>
+      {{blocMediaHero}}
+    </section>
+
+    <section class="section-apropos conteneur">
+      <h2 data-cle-i18n="accueil_apropos_titre">Qui sommes-nous ?</h2>
+      <p id="texteAproposEntreprise" data-cle-i18n="accueil_apropos_texte">
+        HI CONSULTING IMMIGRATION accompagne depuis octobre 2020 les candidats à l'immigration vers le Canada,
+        la France, l'Italie et la Belgique. Implantée à Douala, notre agence s'est spécialisée depuis 2025 dans
+        les procédures d'immigration du Canada : résidence permanente, Entrée Express et ARRIMA.
+      </p>
+
+      <div class="grille-mission-vision">
+        <div class="carte-mission-vision">
+          <img src="{{urlImageMission}}" alt="Mission de HI CONSULTING IMMIGRATION" class="image-mission-vision" loading="lazy">
+          <h3 data-cle-i18n="accueil_mission_titre">Notre mission</h3>
+          <p id="texteMissionEntreprise"></p>
+        </div>
+        <div class="carte-mission-vision">
+          <img src="{{urlImageVision}}" alt="Vision de HI CONSULTING IMMIGRATION" class="image-mission-vision" loading="lazy">
+          <h3 data-cle-i18n="accueil_vision_titre">Notre vision</h3>
+          <p id="texteVisionEntreprise"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-equipe">
+      <div class="conteneur">
+        <h2 data-cle-i18n="accueil_equipe_titre">Notre équipe</h2>
+      </div>
+      <div id="diaporamaEquipe" class="diaporama-equipe" aria-label="Photos de l'équipe HI CONSULTING IMMIGRATION">
+        <div class="squelette-carte squelette-diaporama-equipe"></div>
+      </div>
+      <div id="indicateursDiaporamaEquipe" class="indicateurs-carrousel"></div>
+    </section>
+
+    <section class="section-locaux conteneur section-avec-formes">
+      <div class="forme-decorative forme-cercle" style="width:160px;height:160px;background:var(--degrade-ciel);bottom:-40px;left:-40px;opacity:0.25;"></div>
+      <h2 data-cle-i18n="section_locaux_titre">Nos locaux</h2>
+      <p data-cle-i18n="section_locaux_texte">Découvrez notre agence à Douala, où nous accueillons chaque candidat avec attention.</p>
+      <div id="grillePhotosLocaux" class="grille-photogrid">
+        <div class="squelette-carte"></div>
+        <div class="squelette-carte"></div>
+        <div class="squelette-carte"></div>
+        <div class="squelette-carte"></div>
+      </div>
+    </section>
+
+    <section class="section-services-apercu conteneur">
+      <h2 data-cle-i18n="accueil_services_titre">Nos services phares</h2>
+      <div id="grilleServicesApercu" class="grille-cartes" data-nombre-max="3">
+        <div class="squelette-carte"></div>
+        <div class="squelette-carte"></div>
+        <div class="squelette-carte"></div>
+      </div>
+    </section>
+
+    <section class="section-formulaire-rapide conteneur">
+      <h2 data-cle-i18n="accueil_formulaire_titre">Évaluez votre projet gratuitement</h2>
+      <form id="formulaireEvaluationAccueil" class="formulaire-evaluation">
+        <div class="ligne-formulaire">
+          <input type="text" name="nomComplet" data-placeholder-i18n="ph_nom_complet" placeholder="Nom complet" required>
+          <input type="email" name="email" data-placeholder-i18n="ph_email" placeholder="Adresse email" required>
+        </div>
+        <div class="ligne-formulaire">
+          <input type="tel" name="telephone" data-placeholder-i18n="ph_telephone" placeholder="Téléphone / WhatsApp" required>
+          <select name="projetChoisi" required>
+            <option value="" disabled selected data-cle-i18n="option_choisir_projet">Projet choisi</option>
+            <option value="Canada - Résidence Permanente" data-cle-i18n="option_ca_rp">Canada - Résidence Permanente</option>
+            <option value="Canada - Permis d'étude" data-cle-i18n="option_ca_etude">Canada - Permis d'étude</option>
+            <option value="Canada - Permis de travail" data-cle-i18n="option_ca_travail">Canada - Permis de travail</option>
+            <option value="Canada - Visa visiteur" data-cle-i18n="option_ca_visiteur">Canada - Visa visiteur</option>
+            <option value="France - Visa étude" data-cle-i18n="option_fr_etude">France - Visa étude</option>
+            <option value="France - Visa visiteur" data-cle-i18n="option_fr_visiteur">France - Visa visiteur</option>
+            <option value="Italie - Visa visiteur" data-cle-i18n="option_it_visiteur">Italie - Visa visiteur</option>
+            <option value="Belgique - Visa étude" data-cle-i18n="option_be_etude">Belgique - Visa étude</option>
+          </select>
+        </div>
+        <button type="submit" class="bouton bouton-primaire" data-cle-i18n="formulaire_envoyer">Envoyer ma demande</button>
+        <p id="messageStatutFormulaire" class="message-statut" role="status"></p>
+      </form>
+    </section>
+
+    <section class="section-actualites-apercu conteneur">
+      <div class="entete-section-flex">
+        <h2 data-cle-i18n="accueil_actualites_titre">Dernières actualités migratoires</h2>
+        <a href="/actualites" class="lien-voir-tout" data-cle-i18n="voir_tout">Voir tout →</a>
+      </div>
+      <div id="grilleActualitesApercu" class="grille-cartes" data-nombre-max="3">
+        <div class="squelette-carte squelette-actualite"></div>
+        <div class="squelette-carte squelette-actualite"></div>
+        <div class="squelette-carte squelette-actualite"></div>
+      </div>
+    </section>
+  </main>
+
+  {{> _pied.html}}
+  <script src="/static/js/typewriter.js"></script>
+  <script src="/static/js/accueil.js"></script>
+</body>
+</html>

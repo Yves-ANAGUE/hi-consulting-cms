@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Back-Office | HI CONSULTING IMMIGRATION</title>
+  <link rel="icon" href="/static/images/logo_HICI.jpg">
+  <link rel="stylesheet" href="/admin/css/admin.css">
+</head>
+<body>
+  <div class="mise-en-page-admin">
+    <aside class="barre-laterale-admin">
+      <div class="logo-admin">
+        <img src="/static/images/logo_HICI.jpg" alt="Logo" width="36" height="36">
+        <span>HI CONSULTING</span>
+      </div>
+      <nav>
+        <button class="lien-onglet actif" data-onglet="tableauDeBord">Tableau de bord</button>
+        <button class="lien-onglet" data-onglet="services">Services</button>
+        <button class="lien-onglet" data-onglet="faq">FAQ</button>
+        <button class="lien-onglet" data-onglet="temoignages">Témoignages</button>
+        <button class="lien-onglet" data-onglet="actualites">Actualités</button>
+        <button class="lien-onglet" data-onglet="blog">Blog</button>
+        <button class="lien-onglet" data-onglet="locaux">Nos Locaux</button>
+        <button class="lien-onglet" data-onglet="equipe">Équipe</button>
+        <button class="lien-onglet" data-onglet="textes">Textes du site</button>
+        <button class="lien-onglet" data-onglet="google">Configuration Google</button>
+        <button class="lien-onglet" data-onglet="reseaux">Réseaux sociaux</button>
+        <button class="lien-onglet" data-onglet="medias">Médias</button>
+        <button class="lien-onglet" data-onglet="comptes">Comptes</button>
+      </nav>
+      <button id="boutonDeconnexion" class="bouton-deconnexion">Déconnexion</button>
+    </aside>
+
+    <main class="contenu-admin">
+      <header class="entete-admin">
+        <h1 id="titreOngletActif">Tableau de bord</h1>
+        <span id="infoUtilisateurConnecte" class="info-utilisateur"></span>
+      </header>
+
+      <section id="ongletTableauDeBord" class="panneau-onglet actif">
+        <div class="grille-statistiques">
+          <div class="carte-statistique"><h3 id="statNombreServices">-</h3><p>Services publiés</p></div>
+          <div class="carte-statistique"><h3 id="statNombreFaq">-</h3><p>Questions FAQ</p></div>
+          <div class="carte-statistique"><h3 id="statNombreTemoignages">-</h3><p>Témoignages</p></div>
+          <div class="carte-statistique"><h3 id="statNombreComptes">-</h3><p>Comptes actifs</p></div>
+        </div>
+      </section>
+
+      <section id="ongletServices" class="panneau-onglet">
+        <div class="barre-actions-onglet">
+          <button class="bouton bouton-primaire" data-action="ouvrir-formulaire-service">+ Ajouter un service</button>
+        </div>
+        <div id="listeServicesAdmin" class="liste-elements-admin"></div>
+      </section>
+
+      <section id="ongletFaq" class="panneau-onglet">
+        <div class="barre-actions-onglet">
+          <button class="bouton bouton-primaire" data-action="ouvrir-formulaire-faq">+ Ajouter une question</button>
+        </div>
+        <div id="listeFaqAdmin" class="liste-elements-admin"></div>
+      </section>
+
+      <section id="ongletTemoignages" class="panneau-onglet">
+        <div class="barre-actions-onglet">
+          <button class="bouton bouton-primaire" data-action="ouvrir-formulaire-temoignage">+ Ajouter un témoignage</button>
+        </div>
+        <div id="listeTemoignagesAdmin" class="liste-elements-admin"></div>
+      </section>
+
+      <section id="ongletActualites" class="panneau-onglet">
+        <p class="texte-secondaire">Fil généré automatiquement depuis les flux RSS configurés (lecture seule, aucun stockage en base).</p>
+        <div id="listeActualitesAdmin" class="liste-elements-admin"></div>
+      </section>
+
+      <section id="ongletBlog" class="panneau-onglet">
+        <p class="texte-secondaire">Rédigez vos propres articles (référencés sur Google, avec recherche par mot-clé sur le site).</p>
+        <div class="barre-actions-onglet">
+          <button class="bouton bouton-primaire" data-action="ouvrir-formulaire-article">+ Rédiger un article</button>
+        </div>
+        <div id="listeArticlesAdmin" class="liste-elements-admin"></div>
+      </section>
+
+      <section id="ongletLocaux" class="panneau-onglet">
+        <p class="texte-secondaire">Photos/vidéos de l'agence affichées dans la section "Nos Locaux" de la page d'accueil.</p>
+        <div class="barre-actions-onglet">
+          <button class="bouton bouton-primaire" data-action="ouvrir-formulaire-local">+ Ajouter une photo/vidéo</button>
+        </div>
+        <div id="listeLocauxAdmin" class="liste-elements-admin"></div>
+      </section>
+
+      <section id="ongletEquipe" class="panneau-onglet">
+        <p class="texte-secondaire">Les grandes photos ci-dessous (diaporama collectif) sont affichées sur le site public. Les fiches individuelles restent utiles pour votre suivi interne mais ne sont plus affichées publiquement (à la demande de l'entreprise).</p>
+        <h3 style="margin-bottom:10px;">Photos collectives (diaporama public)</h3>
+        <div class="barre-actions-onglet">
+          <button class="bouton bouton-primaire" data-action="ouvrir-formulaire-photo-equipe">+ Ajouter une photo collective</button>
+        </div>
+        <div id="listePhotosEquipeAdmin" class="liste-elements-admin" style="margin-bottom:30px;"></div>
+
+        <h3 style="margin-bottom:10px;">Fiches individuelles (usage interne uniquement)</h3>
+        <div class="barre-actions-onglet">
+          <button class="bouton bouton-primaire" data-action="ouvrir-formulaire-membre">+ Ajouter un membre</button>
+        </div>
+        <div id="listeEquipeAdmin" class="liste-elements-admin"></div>
+      </section>
+
+      <section id="ongletTextes" class="panneau-onglet">
+        <p class="texte-secondaire">Modifiez ici tous les textes affichés sur le site public (versions française et anglaise).</p>
+        <div id="listeTextesAdmin" class="liste-elements-admin"></div>
+      </section>
+
+      <section id="ongletGoogle" class="panneau-onglet">
+        <form id="formulaireGoogle" class="formulaire-admin">
+          <label>URL du logo de l'entreprise (téléversez-le dans l'onglet Médias puis collez l'URL ici)
+            <input type="text" name="urlLogo" placeholder="https://res.cloudinary.com/.../logo.png">
+          </label>
+          <label>Numéro WhatsApp du bouton flottant (indicatif inclus, sans + ni espaces)
+            <input type="text" name="urlWhatsappFlottant" placeholder="237678924045">
+          </label>
+          <label>Lien d'intégration Google Maps (Google Maps → Partager → Intégrer une carte → copier l'URL du src)
+            <input type="text" name="urlGoogleMaps" placeholder="https://www.google.com/maps/embed?pb=...">
+          </label>
+          <label>URL de la vidéo d'arrière-plan du héros (accepte un fichier direct ou un lien YouTube/Vimeo)
+            <input type="text" name="urlVideoHero" placeholder="https://... (mp4, YouTube ou Vimeo)">
+          </label>
+          <label>Image illustrant la Mission
+            <input type="text" name="urlImageMission" placeholder="https://res.cloudinary.com/.../mission.jpg">
+          </label>
+          <label>Image illustrant la Vision
+            <input type="text" name="urlImageVision" placeholder="https://res.cloudinary.com/.../vision.jpg">
+          </label>
+          <label>ID de mesure Google Analytics 4 (G-XXXXXX)
+            <input type="text" name="idMesureGa4" placeholder="G-XXXXXXXXXX">
+          </label>
+          <label>Code de vérification Google Search Console
+            <input type="text" name="codeVerificationSearchConsole" placeholder="abcdef123456...">
+          </label>
+          <button type="submit" class="bouton bouton-primaire">Enregistrer</button>
+          <p id="messageStatutGoogle" class="message-statut"></p>
+        </form>
+      </section>
+
+      <section id="ongletReseaux" class="panneau-onglet">
+        <p class="texte-secondaire">Ajoutez, modifiez ou retirez les réseaux sociaux affichés dans le pied de page du site.</p>
+        <div class="barre-actions-onglet">
+          <button class="bouton bouton-primaire" data-action="ouvrir-formulaire-reseau">+ Ajouter un réseau social</button>
+        </div>
+        <div id="listeReseauxAdmin" class="liste-elements-admin"></div>
+      </section>
+
+      <section id="ongletMedias" class="panneau-onglet">
+        <div class="zone-televersement" id="zoneGlisserDeposer">
+          <p>Glissez-déposez vos images/vidéos ici, ou</p>
+          <input type="file" id="entreeFichiers" multiple accept="image/*,video/*">
+        </div>
+        <div id="resultatsTeleversement" class="liste-elements-admin"></div>
+      </section>
+
+      <section id="ongletComptes" class="panneau-onglet">
+        <div class="barre-actions-onglet">
+          <button class="bouton bouton-primaire" data-action="ouvrir-formulaire-compte">+ Ajouter un compte</button>
+        </div>
+        <div id="listeComptesAdmin" class="liste-elements-admin"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="modaleFormulaire" class="modale-formulaire" hidden>
+    <div class="modale-formulaire-contenu">
+      <button id="fermerModaleFormulaire" class="bouton-fermer-modale" aria-label="Fermer">&times;</button>
+      <div id="corpsModaleFormulaire"></div>
+    </div>
+  </div>
+
+  <script src="/admin/js/admin.js"></script>
+</body>
+</html>

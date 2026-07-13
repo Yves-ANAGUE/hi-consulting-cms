@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {{balisesMeta}}
+  <link rel="icon" href="/static/images/logo_HICI.jpg">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script type="application/ld+json">{{schemaArticle}}</script>
+</head>
+<body>
+  {{> _entete.html}}
+
+  <main>
+    <article class="conteneur article-blog" id="articleBlog">
+      <!-- Contenu injecté côté client depuis les données de l'article (déjà présentes en SSR ci-dessous) -->
+    </article>
+  </main>
+
+  {{> _pied.html}}
+  <script id="donneesArticleInitiales" type="application/json">{{idArticleJson}}</script>
+  <script src="/static/js/blog-detail.js"></script>
+</body>
+</html>

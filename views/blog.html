@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {{balisesMeta}}
+  <link rel="icon" href="/static/images/logo_HICI.jpg">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  {{> _entete.html}}
+
+  <main>
+    <section class="entete-page conteneur section-avec-formes">
+      <div class="forme-decorative forme-blob" style="width:220px;height:220px;background:var(--degrade-chaud);top:-60px;right:5%;opacity:0.18;"></div>
+      <h1 data-cle-i18n="blog_titre_page">Blog Immigration</h1>
+      <p data-cle-i18n="blog_sous_titre">Conseils, guides et analyses pour réussir votre projet d'immigration.</p>
+
+      <form id="formulaireRechercheBlog" class="formulaire-recherche-blog">
+        <input type="search" id="entreeRechercheBlog" data-placeholder-i18n="ph_recherche_blog" placeholder="Rechercher un article (ex: visa étudiant, Entrée Express...)">
+        <button type="submit" aria-label="Rechercher">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+        </button>
+      </form>
+    </section>
+
+    <section class="conteneur section-sans-haut">
+      <div id="grilleArticlesBlog" class="grille-cartes">
+        <div class="squelette-carte"></div>
+        <div class="squelette-carte"></div>
+        <div class="squelette-carte"></div>
+      </div>
+    </section>
+  </main>
+
+  {{> _pied.html}}
+  <script src="/static/js/blog.js"></script>
+</body>
+</html>

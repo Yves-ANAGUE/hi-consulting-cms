@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {{balisesMeta}}
+  <link rel="icon" href="/static/images/logo_HICI.jpg">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script type="application/ld+json">{{schemaTemoignages}}</script>
+</head>
+<body>
+  {{> _entete.html}}
+
+  <main>
+    <section class="entete-page conteneur">
+      <h1 data-cle-i18n="temoignages_titre_page">Témoignages de Réussite</h1>
+      <p data-cle-i18n="temoignages_sous_titre">Ils ont fait confiance à HI CONSULTING IMMIGRATION.</p>
+    </section>
+
+    <section class="conteneur section-sans-haut">
+      <div class="carrousel-temoignages">
+        <button id="boutonPrecedentTemoignage" class="bouton-carrousel bouton-carrousel-gauche" aria-label="Témoignage précédent">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div id="pisteCarrouselTemoignages" class="piste-carrousel-temoignages">
+          <div class="squelette-carte"></div>
+          <div class="squelette-carte"></div>
+          <div class="squelette-carte"></div>
+        </div>
+        <button id="boutonSuivantTemoignage" class="bouton-carrousel bouton-carrousel-droite" aria-label="Témoignage suivant">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+      <div id="indicateursCarrouselTemoignages" class="indicateurs-carrousel"></div>
+    </section>
+  </main>
+
+  <div id="modaleVideo" class="modale-video" hidden>
+    <div class="modale-video-contenu">
+      <button id="fermerModaleVideo" aria-label="Fermer">&times;</button>
+      <div id="conteneurIframeVideo"></div>
+    </div>
+  </div>
+
+  {{> _pied.html}}
+  <script src="/static/js/temoignages.js"></script>
+</body>
+</html>

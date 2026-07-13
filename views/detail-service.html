@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {{balisesMeta}}
+  <link rel="icon" href="/static/images/logo_HICI.jpg">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  {{> _entete.html}}
+
+  <main>
+    <article class="conteneur article-service" id="articleService">
+      <!-- Contenu injecté côté client depuis les données du service (déjà présentes en SSR ci-dessous) -->
+    </article>
+  </main>
+
+  {{> _pied.html}}
+  <script id="donneesServiceInitiales" type="application/json">{{idServiceJson}}</script>
+  <script src="/static/js/detail-service.js"></script>
+</body>
+</html>

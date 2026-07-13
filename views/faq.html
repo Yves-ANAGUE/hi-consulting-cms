@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {{balisesMeta}}
+  <link rel="icon" href="/static/images/logo_HICI.jpg">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script type="application/ld+json">{{schemaFaq}}</script>
+</head>
+<body>
+  {{> _entete.html}}
+
+  <main>
+    <section class="entete-page conteneur section-avec-formes">
+      <div class="forme-decorative forme-blob" style="width:200px;height:200px;background:var(--degrade-beige);top:-50px;right:6%;opacity:0.4;"></div>
+      <h1 data-cle-i18n="faq_titre_page">Foire Aux Questions</h1>
+      <p data-cle-i18n="faq_sous_titre">Les réponses aux questions les plus posées sur l'immigration.</p>
+    </section>
+
+    <section class="conteneur section-sans-haut">
+      <div id="accordeonFaq" class="accordeon-faq">
+        <div class="squelette-carte"></div>
+        <div class="squelette-carte"></div>
+        <div class="squelette-carte"></div>
+      </div>
+    </section>
+  </main>
+
+  {{> _pied.html}}
+  <script src="/static/js/faq.js"></script>
+</body>
+</html>

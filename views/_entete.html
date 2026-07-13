@@ -1,0 +1,41 @@
+<header class="entete-site" id="enteteSite">
+  <div class="conteneur entete-contenu">
+    <a href="/" class="logo-lien" aria-label="HI CONSULTING IMMIGRATION - Accueil">
+      <img
+        class="logo-image"
+        src="{{urlLogo}}"
+        alt="HI CONSULTING IMMIGRATION"
+        onerror="this.onerror=null;this.src='/static/images/logo_HICI.jpg';">
+      <span class="logo-texte">HI CONSULTING<br><small>IMMIGRATION</small></span>
+    </a>
+
+    <nav class="navigation-principale" aria-label="Navigation principale">
+      <ul>
+        <li><a href="/" data-cle-i18n="nav_accueil">Accueil</a></li>
+        <li><a href="/services" data-cle-i18n="nav_services">Services</a></li>
+        <li><a href="/temoignages" data-cle-i18n="nav_temoignages">Témoignages</a></li>
+        <li><a href="/faq" data-cle-i18n="nav_faq">FAQ</a></li>
+        <li><a href="/actualites" data-cle-i18n="nav_actualites">Actualités</a></li>
+        <li><a href="/blog" data-cle-i18n="nav_blog">Blog</a></li>
+        <li><a href="/contact" data-cle-i18n="nav_contact" class="bouton-nav">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="recherche-entete">
+      <button id="boutonRechercheEntete" class="bouton-recherche-entete" aria-label="Rechercher un article" type="button">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+      </button>
+      <div id="panneauRechercheEntete" class="panneau-recherche-entete" hidden>
+        <input type="search" id="entreeRechercheEntete" data-placeholder-i18n="ph_recherche_blog" placeholder="Rechercher un article...">
+        <div id="resultatsRechercheEntete" class="resultats-recherche-entete"></div>
+      </div>
+    </div>
+
+    <div class="entete-actions">
+      <button id="selecteurLangue" class="selecteur-langue" aria-label="Changer de langue" type="button">FR / EN</button>
+      <button id="boutonMenuMobile" class="bouton-menu-mobile" aria-label="Ouvrir le menu" type="button">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>

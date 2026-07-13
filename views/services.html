@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {{balisesMeta}}
+  <link rel="icon" href="/static/images/logo_HICI.jpg">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  {{> _entete.html}}
+
+  <main>
+    <section class="entete-page conteneur section-avec-formes">
+      <div class="forme-decorative forme-triangle" style="width:180px;height:180px;background:var(--degrade-ciel);top:-30px;left:8%;opacity:0.18;"></div>
+      <h1 data-cle-i18n="services_titre_page">Nos Services d'Immigration</h1>
+      <p data-cle-i18n="services_sous_titre">Canada, France, Italie et Belgique : un accompagnement complet à chaque étape.</p>
+
+      <div class="filtres-services">
+        <button class="filtre-pays actif" data-pays="tous" data-cle-i18n="filtre_tous">Tous</button>
+        <button class="filtre-pays" data-pays="Canada" data-cle-i18n="pays_canada">Canada</button>
+        <button class="filtre-pays" data-pays="France" data-cle-i18n="pays_france">France</button>
+        <button class="filtre-pays" data-pays="Italie" data-cle-i18n="pays_italie">Italie</button>
+        <button class="filtre-pays" data-pays="Belgique" data-cle-i18n="pays_belgique">Belgique</button>
+      </div>
+    </section>
+
+    <section class="conteneur section-sans-haut">
+      <div id="grilleServicesComplete" class="grille-cartes">
+        <div class="squelette-carte"></div>
+        <div class="squelette-carte"></div>
+        <div class="squelette-carte"></div>
+        <div class="squelette-carte"></div>
+      </div>
+    </section>
+  </main>
+
+  {{> _pied.html}}
+  <script src="/static/js/services.js"></script>
+</body>
+</html>
