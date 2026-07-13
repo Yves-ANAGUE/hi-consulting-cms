@@ -8,7 +8,7 @@ routeur.post(
   '/',
   verifierAuthentification,
   autoriserRoles('admin', 'super_admin', 'collaborateur'),
-  televersementMultiple.array('fichiers', 20),
+  televersementMultiple.array('fichiers', 15),
   televersementController.televerserMedias
 );
 

@@ -13,8 +13,8 @@ const stockageMemoire = multer.memoryStorage();
 const televersementMultiple = multer({
   storage: stockageMemoire,
   limits: {
-    fileSize: 400 * 1024 * 1024, // 400 Mo par fichier (vidéos de témoignages incluses)
-    files: 20
+    fileSize: 80 * 1024 * 1024, // 80 Mo par fichier (vidéos de témoignages incluses)
+    files: 15
   },
   fileFilter: (requete, fichier, callback) => {
     const typesAutorises = /^(image|video)\//;
