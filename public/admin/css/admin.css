@@ -44,8 +44,8 @@ body { font-family: 'Segoe UI', system-ui, sans-serif; color: var(--bleu-fonce);
 .lien-onglet:hover { background: rgba(255,255,255,0.06); }
 .lien-onglet.actif { background: rgba(255,255,255,0.1); border-left-color: var(--rouge); color: var(--blanc); font-weight: 600; }
 .bouton-deconnexion {
-  margin: 20px; padding: 10px; background: var(--rouge); color: var(--blanc); border: none; border-radius: 8px;
-  cursor: pointer; font-weight: 600;
+  margin: 20px 20px 0 20px; padding: 10px 20px; background: var(--rouge); color: var(--blanc); border: none; border-radius: 8px;
+  cursor: pointer; font-weight: 600; width: calc(100% - 40px); text-align: center; box-sizing: border-box;
 }
 
 .contenu-admin { flex: 1; padding: 30px 40px; overflow-y: auto; }

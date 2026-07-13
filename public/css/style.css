@@ -554,13 +554,13 @@ h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--bleu-fonce); }
 
 /* ============ Carrousel témoignages ============ */
 .carrousel-temoignages { display: flex; align-items: center; gap: 16px; }
-.piste-carrousel-temoignages { flex: 1; position: relative; min-height: 320px; }
+.piste-carrousel-temoignages { flex: 1; position: relative; min-height: 320px; overflow: visible; }
 .diapositive-temoignage {
-  position: absolute; inset: 0; opacity: 0; transform: translateX(40px) scale(0.97);
-  transition: opacity 0.5s ease, transform 0.5s ease; pointer-events: none;
+  position: relative; opacity: 0; transform: translateX(40px) scale(0.97);
+  transition: opacity 0.5s ease, transform 0.5s ease; pointer-events: none; min-height: 320px; display: flex;
 }
 .diapositive-temoignage.active { opacity: 1; transform: translateX(0) scale(1); pointer-events: auto; }
-.diapositive-temoignage .carte { max-width: 640px; margin: 0 auto; }
+.diapositive-temoignage .carte { max-width: 640px; margin: 0 auto; width: 100%; }
 .bouton-carrousel {
   flex-shrink: 0; width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--gris-clair);
   background: var(--blanc); color: var(--bleu-fonce); cursor: pointer; display: flex;
