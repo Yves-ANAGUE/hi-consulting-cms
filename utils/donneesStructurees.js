@@ -13,6 +13,7 @@ function construireBaliseMetaHtml({ titre, description, urlImage, urlCanonique, 
   balises.push(`<meta property="og:description" content="${echapperHtml(description)}">`);
   balises.push(`<meta property="og:type" content="website">`);
   balises.push(`<meta property="og:url" content="${urlCanonique}">`);
+  balises.push(`<meta property="og:site_name" content="HI CONSULTING IMMIGRATION">`);
   if (urlImage) balises.push(`<meta property="og:image" content="${urlImage}">`);
   balises.push(`<meta name="twitter:card" content="summary_large_image">`);
 
