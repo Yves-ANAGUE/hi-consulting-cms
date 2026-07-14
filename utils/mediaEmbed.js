@@ -34,6 +34,18 @@ function estFichierImageDirect(url) {
  * @param {{classe: string, alt: string, urlSecours: string}} options
  * @returns {string} HTML prêt à insérer
  */
+
+/**
+ * Dérive automatiquement une vignette à partir d'une vidéo Cloudinary, en
+ * remplaçant l'extension du fichier par .jpg (Cloudinary génère alors la
+ * première image de la vidéo). Évite de dépendre d'un service tiers comme
+ * Picsum pour la vignette, qui n'est pas indexée par Google (robots.txt).
+ */
+function deriverVignetteCloudinary(url) {
+  if (!url || !url.includes('res.cloudinary.com') || !url.includes('/video/upload/')) return null;
+  return url.replace(/\.(mp4|webm|mov|ogg)(\?.*)?$/i, '.jpg');
+}
+
 function construireBlocMediaFond(url, { classe = '', alt = '', urlSecours = '' } = {}) {
   if (!url) {
     return urlSecours
@@ -65,7 +77,8 @@ function construireBlocMediaFond(url, { classe = '', alt = '', urlSecours = '' }
   }
 
   if (estFichierVideoDirect(url)) {
-    return `<video class="${classe}" autoplay muted loop playsinline ${urlSecours ? `poster="${urlSecours}"` : ''}>
+    const vignetteAuto = deriverVignetteCloudinary(url);
+    return `<video class="${classe}" autoplay muted loop playsinline ${vignetteAuto ? `poster="${vignetteAuto}"` : ''}>
       <source src="${url}">
     </video>`;
   }
@@ -79,4 +92,5 @@ function construireBlocMediaFond(url, { classe = '', alt = '', urlSecours = '' }
   return construireBlocMediaFond('', { classe, alt, urlSecours });
 }
 
-module.exports = { construireBlocMediaFond, extraireIdYoutube, extraireIdVimeo, estFichierVideoDirect, estFichierImageDirect };
+module.exports = { construireBlocMediaFond, extraireIdYoutube, extraireIdVimeo, estFichierVideoDirect, estFichierImageDirect, deriverVignetteCloudinary };
+

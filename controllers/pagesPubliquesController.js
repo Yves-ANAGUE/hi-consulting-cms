@@ -62,7 +62,7 @@ async function obtenirParametresSite() {
     blocMediaHero: construireBlocMediaFond(urlVideoHero, {
       classe: urlVideoHero ? 'heros-video' : 'heros-image',
       alt: 'Voyage vers le Canada, avion et destination d\'immigration',
-      urlSecours: 'https://picsum.photos/seed/hi-consulting-hero/1400/800'
+      
     })
   };
 }
