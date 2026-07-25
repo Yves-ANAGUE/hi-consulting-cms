@@ -1,14 +1,13 @@
 const { televerserVersCloudinary } = require('../config/cloudinary');
+const { cloudinary } = require('../config/cloudinary');
 const { envelopperTousLesControleurs } = require('../utils/envelopperAsync');
 
 /**
  * Traite plusieurs fichiers en mémoire et les téléverse séquentiellement
- * vers Cloudinary. Traitement séquentiel (et non Promise.all) volontaire :
- * cela borne le nombre de flux d'upload simultanés et donc le pic de RAM
- * consommé (chaque buffer est libéré par le ramasse-miettes dès que son
- * upload est terminé), ce qui est préférable sur un environnement à 512 Mo.
- * @complexity O(n) appels réseau séquentiels pour n fichiers - le coût
- * dominant est le transfert réseau, pas le calcul local.
+ * vers Cloudinary. CONSERVÉ pour compatibilité mais plus utilisé par défaut
+ * par le Back-Office (voir genererSignatureTeleversement ci-dessous, qui
+ * permet un envoi direct navigateur → Cloudinary sans passer par la RAM du
+ * serveur, donc sans plafond de taille imposé par Render).
  */
 async function televerserMedias(requete, reponse) {
   const fichiers = requete.files;
@@ -33,4 +32,31 @@ async function televerserMedias(requete, reponse) {
   reponse.status(codeStatut).json({ televersements: resultats, erreurs });
 }
 
-module.exports = envelopperTousLesControleurs({ televerserMedias });
+/**
+ * Génère une signature d'upload Cloudinary côté serveur (seul endroit où la
+ * clé secrète API_SECRET peut être manipulée sans risque). Le navigateur
+ * utilise ensuite cette signature pour uploader DIRECTEMENT vers Cloudinary,
+ * sans que le fichier ne transite jamais par la RAM de notre serveur Render
+ * — donc aucune limite de taille imposée par notre code ou notre hébergeur
+ * (seule la limite de votre compte Cloudinary s'applique, très large en
+ * gratuit : 100 Mo par fichier vidéo/image).
+ */
+function genererSignatureTeleversement(requete, reponse) {
+  const timestamp = Math.round(Date.now() / 1000);
+  const dossier = 'hi-consulting-immigration';
+
+  const signature = cloudinary.utils.api_sign_request(
+    { timestamp, folder: dossier },
+    process.env.CLOUDINARY_API_SECRET
+  );
+
+  reponse.json({
+    signature,
+    timestamp,
+    dossier,
+    cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+    apiKey: process.env.CLOUDINARY_API_KEY
+  });
+}
+
+module.exports = envelopperTousLesControleurs({ televerserMedias, genererSignatureTeleversement });

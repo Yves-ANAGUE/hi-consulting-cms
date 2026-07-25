@@ -594,74 +594,91 @@ function configurerZoneTeleversement() {
   entreeFichiers.addEventListener('change', (e) => televerserFichiers(e.target.files));
 }
 
-async function televerserFichiers(listeFichiers) {
-  const conteneurResultats = document.getElementById('resultatsTeleversement');
-  if (!listeFichiers.length) return;
-
-  const tailleTotaleMo = (Array.from(listeFichiers).reduce((total, f) => total + f.size, 0) / (1024 * 1024)).toFixed(1);
-  conteneurResultats.innerHTML = `
-    <div class="barre-progression-conteneur">
-      <div class="barre-progression-info">
-        <span id="texteProgressionUpload">Envoi de ${listeFichiers.length} fichier(s) (${tailleTotaleMo} Mo)...</span>
-        <span id="pourcentageProgressionUpload">0%</span>
-      </div>
-      <div class="barre-progression-fond">
-        <div id="barreProgressionUpload" class="barre-progression-remplissage" style="width:0%"></div>
-      </div>
-    </div>`;
+/**
+ * Upload direct navigateur → Cloudinary, sans passer par notre serveur.
+ * Le fichier ne sature donc jamais la RAM du backend Render, quelle que
+ * soit sa taille (seule la limite de votre compte Cloudinary s'applique).
+ */
+async function televerserFichierDirectCloudinary(fichier, onProgression) {
+  const infosSignature = await appelApi('/televersement/signature');
 
   const formData = new FormData();
-  Array.from(listeFichiers).forEach((fichier) => formData.append('fichiers', fichier));
+  formData.append('file', fichier);
+  formData.append('api_key', infosSignature.apiKey);
+  formData.append('timestamp', infosSignature.timestamp);
+  formData.append('signature', infosSignature.signature);
+  formData.append('folder', infosSignature.dossier);
 
-  try {
-    const resultat = await televerserAvecProgression(formData);
-    conteneurResultats.innerHTML = (resultat.televersements || []).map((fichier) => `
-      <div class="item-liste-admin">
-        <div class="infos-item"><strong>${echapperHtml(fichier.nomOriginal)}</strong><span>${fichier.type}</span></div>
-        <input type="text" readonly value="${fichier.url}" onclick="this.select()" style="flex:2;padding:8px;border-radius:6px;border:1px solid #d7dbe0;">
-      </div>`).join('') || '<p class="texte-secondaire">Aucun fichier téléversé.</p>';
-  } catch (erreur) {
-    conteneurResultats.innerHTML = `<p class="message-statut erreur">${erreur.message}</p>`;
-  }
-}
+  const typeRessource = fichier.type.startsWith('video') ? 'video' : 'image';
+  const urlCloudinary = `https://api.cloudinary.com/v1_1/${infosSignature.cloudName}/${typeRessource}/upload`;
 
-/**
- * fetch() ne permet pas de suivre la progression d'un envoi (upload), seulement
- * celle d'une réception. XMLHttpRequest expose `upload.onprogress`, seul moyen
- * natif d'afficher une barre de progression fidèle pendant le transfert des
- * fichiers, potentiellement volumineux (vidéos de témoignages), vers le serveur.
- */
-function televerserAvecProgression(formData) {
   return new Promise((resoudre, rejeter) => {
     const requete = new XMLHttpRequest();
-    requete.open('POST', `${API}/televersement`);
-    requete.withCredentials = true;
+    requete.open('POST', urlCloudinary);
 
     requete.upload.addEventListener('progress', (evenement) => {
-      if (!evenement.lengthComputable) return;
-      const pourcentage = Math.round((evenement.loaded / evenement.total) * 100);
-      const barre = document.getElementById('barreProgressionUpload');
-      const texte = document.getElementById('pourcentageProgressionUpload');
-      if (barre) barre.style.width = `${pourcentage}%`;
-      if (texte) texte.textContent = `${pourcentage}%`;
+      if (evenement.lengthComputable) onProgression(Math.round((evenement.loaded / evenement.total) * 100));
     });
 
     requete.addEventListener('load', () => {
       try {
         const donnees = JSON.parse(requete.responseText);
         if (requete.status >= 200 && requete.status < 300) {
-          resoudre(donnees);
+          resoudre({ nomOriginal: fichier.name, url: donnees.secure_url, type: typeRessource });
         } else {
-          rejeter(new Error(donnees.erreur || `Erreur HTTP ${requete.status}`));
+          rejeter(new Error(donnees.error?.message || `Erreur HTTP ${requete.status}`));
         }
       } catch {
-        rejeter(new Error('Réponse du serveur invalide.'));
+        rejeter(new Error('Réponse Cloudinary invalide.'));
       }
     });
 
     requete.addEventListener('error', () => rejeter(new Error('Erreur réseau pendant le téléversement.')));
     requete.send(formData);
   });
+}
+
+async function televerserFichiers(listeFichiers) {
+  const conteneurResultats = document.getElementById('resultatsTeleversement');
+  if (!listeFichiers.length) return;
+
+  conteneurResultats.innerHTML = Array.from(listeFichiers).map((fichier, index) => `
+    <div class="barre-progression-conteneur" id="progression-${index}">
+      <div class="barre-progression-info">
+        <span>${echapperHtml(fichier.name)}</span>
+        <span id="pourcentage-${index}">0%</span>
+      </div>
+      <div class="barre-progression-fond"><div id="barre-${index}" class="barre-progression-remplissage" style="width:0%"></div></div>
+    </div>`).join('');
+
+  const resultats = [];
+  const erreurs = [];
+
+  // Séquentiel (un fichier à la fois) : évite de multiplier les connexions
+  // simultanées vers Cloudinary et garde une barre de progression lisible.
+  for (let index = 0; index < listeFichiers.length; index++) {
+    try {
+      const resultat = await televerserFichierDirectCloudinary(listeFichiers[index], (pourcentage) => {
+        const barre = document.getElementById(`barre-${index}`);
+        const texte = document.getElementById(`pourcentage-${index}`);
+        if (barre) barre.style.width = `${pourcentage}%`;
+        if (texte) texte.textContent = `${pourcentage}%`;
+      });
+      resultats.push(resultat);
+    } catch (erreur) {
+      erreurs.push({ nomOriginal: listeFichiers[index].name, message: erreur.message });
+    }
+  }
+
+  conteneurResultats.innerHTML = resultats.map((fichier) => `
+    <div class="item-liste-admin">
+      <div class="infos-item"><strong>${echapperHtml(fichier.nomOriginal)}</strong><span>${fichier.type}</span></div>
+      <input type="text" readonly value="${fichier.url}" onclick="this.select()" style="flex:2;padding:8px;border-radius:6px;border:1px solid #d7dbe0;">
+    </div>`).join('') || '';
+
+  if (erreurs.length > 0) {
+    conteneurResultats.innerHTML += erreurs.map((e) => `<p class="message-statut erreur">${echapperHtml(e.nomOriginal)} : ${echapperHtml(e.message)}</p>`).join('');
+  }
 }
 
 /* ============================================================
