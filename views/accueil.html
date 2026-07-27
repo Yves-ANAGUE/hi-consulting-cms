@@ -4,10 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   {{balisesMeta}}
+  
+  <!-- Injection dynamique du script JSON-LD de nom de site -->
+  {{{schemaNomDuSite}}}
+  
   <link rel="icon" href="/static/images/logo_HICI.jpg">
   <link rel="stylesheet" href="/static/css/style.css">
   <script type="application/ld+json">{{schemaLocalBusiness}}</script>
 </head>
+
 <body>
   {{> _entete.html}}
 

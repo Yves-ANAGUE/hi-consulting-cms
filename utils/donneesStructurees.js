@@ -106,11 +106,31 @@ function genererSchemaArticle(article, urlCanonique) {
   });
 }
 
+/**
+ * Génère le schéma obligatoire exigé par Google pour imposer le nom du site
+ * à la place du nom de l'hébergeur (Render). À intégrer sur la page d'accueil.
+ */
+function genererSchemaNomDuSite() {
+  const urlSite = process.env.URL_SITE || 'http://localhost:3000';
+  
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    'name': 'HI CONSULTING IMMIGRATION',
+    'alternateName': ['HI Consulting', 'HI Consulting Immigration Douala'], // Noms alternatifs que Google peut considérer
+    'url': urlSite
+  };
+
+  return `<script type="application/ld+json">\n${JSON.stringify(schema, null, 2)}\n</script>`;
+}
+
+
 module.exports = {
   construireBaliseMetaHtml,
   genererSchemaLocalBusiness,
   genererSchemaFaqPage,
   genererSchemaTemoignages,
   genererSchemaArticle,
+  genererSchemaNomDuSite,
   echapperHtml
 };

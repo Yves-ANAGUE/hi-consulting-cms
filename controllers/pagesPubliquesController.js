@@ -22,6 +22,18 @@ const ENTREPRISE = {
   ]
 };
 
+function genererSchemaNomDuSite() {
+  const urlSite = process.env.URL_SITE || 'http://localhost:3000';
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    'name': 'HI CONSULTING IMMIGRATION',
+    'alternateName': ['HI Consulting', 'HI Consulting Immigration Douala'],
+    'url': urlSite
+  };
+  return `<script type="application/ld+json">\n${JSON.stringify(schema, null, 2)}\n</script>`;
+}
+
 async function obtenirConfigGoogleActive(cheminRequete) {
   // Les routes d'administration ne doivent pas être suivies par GA4.
   if (cheminRequete.startsWith('/admin')) return { idMesureGa4: null, verificationSearchConsole: null };
@@ -71,20 +83,25 @@ function urlCanoniqueDepuis(requete) {
   return `${process.env.URL_SITE || 'http://localhost:3000'}${requete.path}`;
 }
 
-async function rendrePageAccueil(requete, reponse) {
-  const [configGoogle, parametresSite] = await Promise.all([
-    obtenirConfigGoogleActive(requete.path),
-    obtenirParametresSite()
-  ]);
-  const balisesMeta = construireBaliseMetaHtml({
-    titre: 'HI CONSULTING IMMIGRATION | Réussir au Canada',
-    description: ENTREPRISE.slogan,
-    urlCanonique: urlCanoniqueDepuis(requete),
-    ...configGoogle
-  });
-  const schemaLocalBusiness = genererSchemaLocalBusiness(ENTREPRISE);
-  const html = rendreGabarit('accueil.html', { balisesMeta, schemaLocalBusiness, ...parametresSite });
-  reponse.send(html);
+async function rendrePageAccueil(requete, reponse) { 
+  const [configGoogle, parametresSite] = await Promise.all([ 
+    obtenirConfigGoogleActive(requete.path), 
+    obtenirParametresSite() 
+  ]); 
+  const balisesMeta = construireBaliseMetaHtml({ titre: 'HI CONSULTING IMMIGRATION | Réussir au Canada', description: ENTREPRISE.slogan, urlCanonique: urlCanoniqueDepuis(requete), ...configGoogle }); 
+  const schemaLocalBusiness = genererSchemaLocalBusiness(ENTREPRISE); 
+  
+  // Nouveau schéma d'identité généré
+  const schemaNomDuSite = genererSchemaNomDuSite();
+
+  // Envoi des variables complètes au gabarit
+  const html = rendreGabarit('accueil.html', { 
+    balisesMeta, 
+    schemaLocalBusiness, 
+    schemaNomDuSite, // <-- Nouvelle variable passée au HTML
+    ...parametresSite 
+  }); 
+  reponse.send(html); 
 }
 
 async function rendrePageServices(requete, reponse) {
