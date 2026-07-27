@@ -11,7 +11,7 @@
   <link rel="icon" href="/static/images/logo_HICI.jpg">
   <link rel="stylesheet" href="/static/css/style.css">
   
-  <!-- Ajout d'un espacement élégant au-dessus des titres h2 principaux -->
+  <!-- Ajout des espacements et des bordures de séparation discrètes -->
   <style>
     main h2 {
       margin-top: 4.5rem !important;
@@ -20,6 +20,11 @@
     /* Ajustement spécifique pour éviter que le premier titre colle au héros */
     .section-apropos h2 {
       margin-top: 4rem !important;
+    }
+    /* Bordure discrète sous chaque section de la page (sauf la dernière) */
+    main section:not(.section-actualites-apercu) {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      padding-bottom: 4rem;
     }
   </style>
 
@@ -43,7 +48,7 @@
         <span class="heros-etiquette">Réussir au Canada</span>
         <h1><span id="texteMachineAEcrire" class="machine-a-ecrire"></span></h1>
         <p class="heros-slogan" id="texteSloganPrincipal" data-cle-i18n="accueil_slogan">
-          Nous vous garantissons un service de quality pour la réussite de votre projet d'immigration.
+          Nous vous garantissons un service de qualité pour la réussite de votre projet d'immigration.
         </p>
         <div class="heros-actions">
           <a href="/services" class="bouton bouton-primaire" data-cle-i18n="accueil_bouton_services">Découvrir nos services</a>
