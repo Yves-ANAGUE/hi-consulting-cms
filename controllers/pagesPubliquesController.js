@@ -22,17 +22,26 @@ const ENTREPRISE = {
   ]
 };
 
-function genererSchemaNomDuSite() {
-  const urlSite = process.env.URL_SITE || 'http://localhost:3000';
-  const schema = {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    'name': 'HI CONSULTING IMMIGRATION',
-    'alternateName': ['HI Consulting', 'HI Consulting Immigration Douala'],
-    'url': urlSite
-  };
-  return `<script type="application/ld+json">\n${JSON.stringify(schema, null, 2)}\n</script>`;
+function genererSchemaNomDuSite() { 
+  // Remplacement du localhost par défaut par votre vrai lien Render sécurisé
+  const urlSite = process.env.URL_SITE || 'https://hi-consulting-immigration.onrender.com'; 
+  
+  const schema = { 
+    '@context': 'https://schema.org', 
+    '@type': 'WebSite', 
+    'name': 'HI CONSULTING IMMIGRATION', 
+    'alternateName': ['HI Consulting', 'HI Consulting Immigration Douala'], 
+    'url': urlSite,
+    'potentialAction': {
+      '@type': 'SearchAction',
+      'target': `${urlSite}/blog?q={search_term_string}`,
+      'query-input': 'required name=search_term_string'
+    }
+  }; 
+  
+  return `<script type="application/ld+json">\n${JSON.stringify(schema, null, 2)}\n</script>`; 
 }
+
 
 async function obtenirConfigGoogleActive(cheminRequete) {
   // Les routes d'administration ne doivent pas être suivies par GA4.
