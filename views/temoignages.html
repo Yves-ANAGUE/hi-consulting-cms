@@ -7,38 +7,119 @@
   <link rel="icon" href="/static/images/logo_HICI.jpg">
   <link rel="stylesheet" href="/static/css/style.css">
   
-  <!-- Personnalisation de l'affichage des cartes de témoignages -->
+  <!-- Personnalisation avancée de l'affichage des cartes de témoignages -->
   <style>
-    /* Force les cartes du carrousel à empiler les éléments verticalement */
+    /* Transformation de la carte en grille à deux colonnes (Gauche: Profil / Droite: Contenu) */
     .piste-carrousel-temoignages > div,
     .carte-temoignage {
-      display: flex !important;
-      flex-direction: column !important;
-      align-items: center !important;
-      text-align: center !important;
-      padding: 2.5rem 1.5rem !important;
+      display: grid !important;
+      grid-template-columns: 200px 1fr !important;
+      gap: 2.5rem !important;
+      align-items: start !important;
+      text-align: left !important;
+      padding: 3rem !important;
+      max-width: 900px !important;
+      margin: 0 auto !important;
     }
 
-    /* Repositionne la photo tout en haut et l'agrandit */
+    /* Conteneur pour la colonne de gauche (Photo + Infos alignées en bas à gauche) */
+    .piste-carrousel-temoignages > div > :not(.contenu-temoignage):not(button),
+    .carte-temoignage > :not(.contenu-temoignage):not(button) {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      text-align: left !important;
+    }
+
+    /* Style et agrandissement de la photo du témoignage */
     .piste-carrousel-temoignages img,
     .carte-temoignage img,
     .avatar-temoignage {
-      order: -1 !important; /* Force l'image à passer au-dessus des autres éléments */
-      width: 120px !important; /* Augmentation de la taille (généralement 60px à 80px) */
-      height: 120px !important;
-      max-width: 120px !important;
-      max-height: 120px !important;
+      width: 150px !important;
+      height: 150px !important;
+      max-width: 150px !important;
+      max-height: 150px !important;
       object-fit: cover !important;
-      border-radius: 50% !important; /* Conserve la photo parfaitement ronde */
-      margin-bottom: 1.5rem !important; /* Espace entre la photo et les textes en bas */
-      border: 3px solid var(--couleur-primaire, #A32626); /* Ajout d'une bordure élégante */
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 12px !important; /* Format carré moderne aux coins arrondis */
+      margin-bottom: 1.2rem !important;
+      border: 3px solid var(--couleur-primaire, #A32626);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+      cursor: pointer;
     }
 
-    /* Réalignement du bloc de contenu textuel (nom, texte, étoiles) */
+    /* Effet de zoom fluide au survol de la souris sur la photo */
+    .piste-carrousel-temoignages img:hover,
+    .carte-temoignage img:hover,
+    .avatar-temoignage:hover {
+      transform: scale(1.08) !important;
+    }
+
+    /* Alignement forcé à gauche pour le nom, les étoiles et le pays sous la photo */
+    .nom-temoignage, 
+    .etoiles-temoignage, 
+    .pays-temoignage,
+    .carte-temoignage h3,
+    .carte-temoignage .note,
+    .carte-temoignage .pays {
+      text-align: left !important;
+      margin-left: 0 !important;
+      display: block !important;
+      margin-bottom: 0.4rem !important;
+    }
+
+    /* Organisation de la colonne de droite (Bouton vidéo en haut, texte en dessous) */
     .contenu-temoignage,
     .texte-temoignage {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: flex-start !important;
       width: 100% !important;
+    }
+
+    /* Force le bouton "Voir la vidéo" à se placer en premier sur le côté droit */
+    .contenu-temoignage button,
+    .carte-temoignage .bouton-video {
+      order: -1 !important;
+      margin-bottom: 1.5rem !important;
+      align-self: flex-start !important;
+    }
+
+    /* Style du texte du témoignage à droite */
+    .contenu-temoignage p,
+    .carte-temoignage .commentaire {
+      font-size: 1.1rem !important;
+      line-height: 1.7 !important;
+      color: #4a5568 !important;
+      margin: 0 !important;
+    }
+
+    /* Adaptabilité sur mobile (les colonnes s'empilent proprement si l'écran est petit) */
+    @media (max-width: 768px) {
+      .piste-carrousel-temoignages > div,
+      .carte-temoignage {
+        grid-template-columns: 1fr !important;
+        text-align: center !important;
+        gap: 1.5rem !important;
+        padding: 2rem 1.5rem !important;
+      }
+      .piste-carrousel-temoignages > div > :not(.contenu-temoignage):not(button),
+      .carte-temoignage > :not(.contenu-temoignage):not(button) {
+        align-items: center !important;
+      }
+      .piste-carrousel-temoignages img,
+      .carte-temoignage img,
+      .avatar-temoignage {
+        margin: 0 auto 1rem auto !important;
+      }
+      .nom-temoignage, .etoiles-temoignage, .pays-temoignage,
+      .carte-temoignage h3, .carte-temoignage .note, .carte-temoignage .pays {
+        text-align: center !important;
+      }
+      .contenu-temoignage button,
+      .carte-temoignage .bouton-video {
+        align-self: center !important;
+      }
     }
   </style>
 
