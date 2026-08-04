@@ -63,7 +63,7 @@
     }
 
     /* ==========================================================================
-       RENDU ORDINATEUR : DEUX COLONNES STRUCTURÉES VIA LA DIAPOSITIVE
+       RENDU ORDINATEUR : BORDURE EN DÉGRADÉ MULTICOLORE ET FLEX HORIZONTAL
        ========================================================================== */
     .diapositive-temoignage {
       display: flex !important;
@@ -76,15 +76,16 @@
       border-radius: 16px !important;
       box-sizing: border-box !important;
 
-      /* NOUVELLE BORDURE ANIMÉE DISCRÈTE (Aucun élément derrière, pas de bug vertical) */
-      border: 3px solid #A32626 !important;
-      animation: lueurBordureMulticolore 6s linear infinite !important;
+      /* FORCE L'AFFICHAGE DE LA BORDURE EN DÉGRADÉ MULTICOLORE */
+      border: 4px solid transparent !important;
+      border-image: linear-gradient(45deg, #A32626, #0077b6, #e9c46a, #A32626) 1 !important;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
     }
 
-    /* Taille de la photo sur Ordinateur (Légèrement plus grande) */
+    /* Taille de la photo sur Ordinateur (Agrandie proprement) */
     .diapositive-temoignage img {
       display: block !important;
-      width: 165px !important; /* Agrandie proprement */
+      width: 165px !important; 
       height: 165px !important;
       min-width: 165px !important;
       min-height: 165px !important;
@@ -165,14 +166,6 @@
       color: #A32626 !important;
     }
 
-    /* ANIMATION DE COULEURS PROGRESSIVES SUR LA BORDURE DIRECTE */
-    @keyframes lueurBordureMulticolore {
-      0% { border-color: #A32626; box-shadow: 0 10px 30px rgba(163, 38, 38, 0.08); }
-      33% { border-color: #0077b6; box-shadow: 0 10px 30px rgba(0, 119, 182, 0.08); }
-      66% { border-color: #e9c46a; box-shadow: 0 10px 30px rgba(233, 196, 106, 0.08); }
-      100% { border-color: #A32626; box-shadow: 0 10px 30px rgba(163, 38, 38, 0.08); }
-    }
-
     /* ==========================================================================
        RENDU MOBILE : UNE SEULE COLONNE PARFAITEMENT RE-ORDONNÉE EN CSS
        ========================================================================== */
@@ -249,6 +242,7 @@
           </button>
           
           <div id="indicateursCarrouselTemoignages" class="indicateurs-carrousel" style="margin: 0 !important;"></div>
+
           <button id="boutonSuivantTemoignage" class="bouton-carrousel" aria-label="Témoignage suivant">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
           </button>
