@@ -7,147 +7,243 @@
   <link rel="icon" href="/static/images/logo_HICI.jpg">
   <link rel="stylesheet" href="/static/css/style.css">
   
-  <!-- Personnalisation de l'affichage asymétrique des témoignages -->
   <style>
-    /* Configuration de la carte en deux colonnes (Gauche / Droite) */
-    .piste-carrousel-temoignages > div,
-    .carte-temoignage {
-      display: grid !important;
-      grid-template-columns: 200px 1fr !important;
-      gap: 2.5rem !important;
-      align-items: start !important;
-      text-align: left !important;
-      padding: 3rem !important;
-      background: #ffffff !important;
-      border-radius: 16px !important;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+    /* Force le footer à rester collé tout en bas de la page sans laisser de vide */
+    html, body {
+      height: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    
+    body {
+      display: flex !important;
+      flex-direction: column !important;
+    }
+
+    main {
+      flex: 1 0 auto !important; /* Pousse le footer vers le bas */
     }
 
     /* ==========================================================================
-       COLONNE GAUCHE : PHOTO, NOM, ÉTOILES & PAYS
+       STRUCTURE DE BASE ET COMPACTAGE DES CARTES
        ========================================================================== */
-    /* Conteneur global créé virtuellement ou ciblé pour forcer l'empilement à gauche */
-    .colonne-gauche-temoignage {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1rem;
+    .carrousel-temoignages {
+      position: relative !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      max-width: 850px !important;
+      margin: 0 auto 3rem auto !important;
+      padding: 0 1rem !important;
     }
 
-    /* Conteneur d'image pour isoler le zoom sans faire déborder la photo */
-    .piste-carrousel-temoignages .conteneur-avatar,
-    .carte-temoignage .conteneur-avatar {
-      width: 150px !important;
-      height: 150px !important;
-      border-radius: 12px !important; /* Format carré moderne aux coins arrondis */
-      overflow: hidden !important;
-      border: 3px solid #A32626 !important;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1) !important;
-    }
-
-    /* Style de la photo et effet de zoom fluide au survol */
-    .piste-carrousel-temoignages img,
-    .carte-temoignage img,
-    .avatar-temoignage {
+    .piste-carrousel-temoignages {
+      position: relative !important;
       width: 100% !important;
-      height: 100% !important;
-      object-fit: cover !important;
-      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
-    }
-
-    .piste-carrousel-temoignages > div:hover img,
-    .carte-temoignage:hover img {
-      transform: scale(1.12) !important; /* Zoom progressif au survol de la carte */
-    }
-
-    /* Réalignement des métadonnées sous la photo à gauche */
-    .piste-carrousel-temoignages h3,
-    .carte-temoignage h3,
-    .nom-temoignage,
-    .etoiles-temoignage,
-    .pays-temoignage,
-    .info-temoignage {
-      text-align: left !important;
-      margin: 0 !important;
+      min-height: 340px !important; /* Maintient une hauteur stable pour éviter les sauts de page */
       display: block !important;
     }
 
-    .piste-carrousel-temoignages h3, .carte-temoignage h3 {
-      font-size: 1.25rem !important;
+    .diapositive-temoignage {
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out !important;
+      z-index: 1 !important;
+      box-sizing: border-box !important;
+    }
+
+    .diapositive-temoignage.active {
+      position: relative !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      z-index: 2 !important;
+    }
+
+    /* ==========================================================================
+       RENDU ORDINATEUR : DEUX COLONNES STRUCTURÉES (GAUCHE / DROITE)
+       ========================================================================== */
+    .diapositive-temoignage > div,
+    [class*="carte-temoignage"] {
+      display: grid !important;
+      grid-template-columns: 180px 1fr !important; /* Strictement 2 colonnes */
+      gap: 2.5rem !important;
+      align-items: start !important;
+      padding: 2.5rem !important;
+      background: #ffffff !important;
+      border-radius: 16px !important;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+      box-sizing: border-box !important;
+      width: 100% !important;
+    }
+
+    /* Bloc Identité (Colonne Gauche sur ordinateur) */
+    .diapositive-temoignage img,
+    [class*="carte-temoignage"] img,
+    .avatar-temoignage {
+      display: block !important;
+      width: 150px !important; /* Taille agrandie et nette */
+      height: 150px !important;
+      min-width: 150px !important;
+      min-height: 150px !important;
+      object-fit: cover !important;
+      border-radius: 12px !important;
+      border: 3px solid #A32626 !important;
+      margin: 0 0 1rem 0 !important;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08) !important;
+    }
+
+    /* Aligne tous les textes d'identité sous la photo */
+    .diapositive-temoignage h3, [class*="carte-temoignage"] h3,
+    [class*="nom"], [class*="etoile"], [class*="pays"], .info-temoignage {
+      text-align: left !important;
+      margin: 0 0 0.4rem 0 !important;
+      display: block !important;
+      width: 100% !important;
+    }
+
+    .diapositive-temoignage h3, [class*="carte-temoignage"] h3 {
+      font-size: 1.2rem !important;
       font-weight: 700 !important;
       color: #1a1a1a !important;
       margin-top: 0.5rem !important;
     }
 
-    /* ==========================================================================
-       COLONNE DROITE : BOUTON VIDÉO & TEXTE DU TÉMOIGNAGE
-       ========================================================================== */
-    /* Force l'alignement des éléments textuels et du bouton à droite */
-    .piste-carrousel-temoignages .contenu-droite,
-    .carte-temoignage .contenu-droite {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1.5rem;
-      width: 100%;
+    /* Bloc Contenu (Colonne Droite sur ordinateur) */
+    /* Empêche les éléments de se séparer en colonnes distinctes */
+    .diapositive-temoignage div > :not(img):not(h3):not([class*="etoile"]):not([class*="pays"]):not(.info-temoignage) {
+      display: flex !important;
+      flex-direction: column !important; /* Aligne verticalement bouton puis texte */
+      align-items: flex-start !important;
+      gap: 1.2rem !important;
+      width: 100% !important;
     }
 
-    /* Style du bouton "Voir la vidéo" placé en haut à droite du bloc de contenu */
-    .piste-carrousel-temoignages btn,
-    .carte-temoignage button:not(.bouton-carrousel),
-    .bouton-video-temoignage {
-      order: -1 !important; /* Positionne le bouton tout en haut de la colonne droite */
-      align-self: flex-start !important;
+    /* Bouton d'action vidéo */
+    .bouton-voir-video {
+      order: -1 !important; /* Force le bouton à rester tout en haut */
       background-color: #A32626 !important;
       color: #ffffff !important;
       border: none !important;
-      padding: 0.8rem 1.8rem !important;
+      padding: 0.6rem 1.6rem !important;
+      font-size: 0.95rem !important;
       font-weight: 600 !important;
       border-radius: 8px !important;
       cursor: pointer !important;
-      transition: all 0.3s ease !important;
-      box-shadow: 0 4px 12px rgba(163, 38, 38, 0.2) !important;
+      transition: all 0.2s ease !important;
+      box-shadow: 0 4px 12px rgba(163, 38, 38, 0.15) !important;
+      width: auto !important;
     }
 
-    .piste-carrousel-temoignages button:not(.bouton-carrousel):hover,
-    .bouton-video-temoignage:hover {
+    .bouton-voir-video:hover {
       background-color: #821e1e !important;
       transform: translateY(-2px) !important;
-      box-shadow: 0 6px 15px rgba(163, 38, 38, 0.3) !important;
     }
 
-    /* Typographie descriptive du témoignage textuel */
-    .piste-carrousel-temoignages p,
-    .carte-temoignage p,
+    /* Style du récit textuel */
+    .diapositive-temoignage p,
+    [class*="carte-temoignage"] p,
     .texte-temoignage {
-      font-size: 1.1rem !important;
-      line-height: 1.7 !important;
+      font-size: 1.05rem !important;
+      line-height: 1.6 !important;
       color: #4a4a4a !important;
       margin: 0 !important;
+      text-align: left !important;
     }
 
-    /* Responsive : Repasse sur une seule colonne pour les smartphones */
+    /* ==========================================================================
+       CONTROLES DE NAVIGATION CENTRÉS EN DESSOUS
+       ========================================================================== */
+    .bloc-controles-carrousel {
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      gap: 2rem !important;
+      margin-top: 1.5rem !important;
+      width: 100% !important;
+    }
+
+    .bouton-carrousel {
+      position: static !important;
+      transform: none !important;
+      background: #ffffff !important;
+      border: 2px solid #e2e8f0 !important;
+      color: #333333 !important;
+      width: 46px !important;
+      height: 46px !important;
+      border-radius: 50% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      cursor: pointer !important;
+      transition: all 0.2s ease !important;
+    }
+
+    .bouton-carrousel:hover {
+      background: #f8fafc !important;
+      border-color: #A32626 !important;
+      color: #A32626 !important;
+    }
+
+    /* ==========================================================================
+       RENDU MOBILE : UNE SEULE COLONNE PARFAITEMENT ORDONNÉE
+       ========================================================================== */
     @media (max-width: 768px) {
-      .piste-carrousel-temoignages > div,
-      .carte-temoignage {
-        grid-template-columns: 1fr !important;
-        gap: 1.5rem !important;
-        padding: 2rem !important;
-        text-align: center !important;
-      }
-      .colonne-gauche-temoignage,
-      .piste-carrousel-temoignages .contenu-droite,
-      .carte-temoignage .contenu-droite,
-      .piste-carrousel-temoignages h3,
-      .carte-temoignage h3,
-      .piste-carrousel-temoignages button:not(.bouton-carrousel) {
+      .diapositive-temoignage > div,
+      [class*="carte-temoignage"] {
+        display: flex !important;
+        flex-direction: column !important; /* Force l'affichage sur une seule colonne */
         align-items: center !important;
-        align-self: center !important;
         text-align: center !important;
+        padding: 1.5rem !important;
+        gap: 1.5rem !important;
       }
-      .piste-carrousel-temoignages .conteneur-avatar,
-      .carte-temoignage .conteneur-avatar {
+
+      /* Gestion de l'ordre d'affichage demandé sur mobile */
+      .bouton-voir-video {
+        order: 1 !important; /* Le bouton vidéo se place tout en haut */
         margin: 0 auto !important;
+      }
+
+      .diapositive-temoignage img,
+      [class*="carte-temoignage"] img,
+      .avatar-temoignage {
+        order: 2 !important; /* La photo se place en deuxième position */
+        width: 160px !important; /* Photo très grande et bien visible */
+        height: 160px !important;
+        min-width: 160px !important;
+        min-height: 160px !important;
+        margin: 0 auto !important;
+      }
+
+      /* Le nom, les étoiles et le pays s'empilent en dessous de la photo */
+      .diapositive-temoignage h3, [class*="carte-temoignage"] h3 { order: 3 !important; }
+      [class*="etoile"] { order: 4 !important; }
+      [class*="pays"] { order: 5 !important; }
+
+      /* Le texte descriptif se place tout en bas */
+      .diapositive-temoignage p,
+      [class*="carte-temoignage"] p,
+      .texte-temoignage {
+        order: 6 !important;
+        text-align: center !important;
+        margin: 0 auto !important;
+      }
+
+      /* Recentrage forcé de tous les sous-éléments */
+      .diapositive-temoignage h3, [class*="carte-temoignage"] h3,
+      [class*="nom"], [class*="etoile"], [class*="pays"], .info-temoignage {
+        text-align: center !important;
+        margin: 0 auto 0.3rem auto !important;
+        width: auto !important;
+      }
+
+      .diapositive-temoignage div > :not(img):not(h3):not([class*="etoile"]):not([class*="pays"]):not(.info-temoignage) {
+        align-items: center !important;
+        order: 6 !important; /* Aligne le bloc texte restant tout en bas */
       }
     }
   </style>
@@ -165,30 +261,52 @@
 
     <section class="conteneur section-sans-haut">
       <div class="carrousel-temoignages">
-        <button id="boutonPrecedentTemoignage" class="bouton-carrousel bouton-carrousel-gauche" aria-label="Témoignage précédent">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-        </button>
+        
         <div id="pisteCarrouselTemoignages" class="piste-carrousel-temoignages">
           <div class="squelette-carte"></div>
           <div class="squelette-carte"></div>
           <div class="squelette-carte"></div>
         </div>
-        <button id="boutonSuivantTemoignage" class="bouton-carrousel bouton-carrousel-droite" aria-label="Témoignage suivant">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-        </button>
-      </div>
-      <div id="indicateursCarrouselTemoignages" class="indicateurs-carrousel"></div>
+        
+        <div class="bloc-controles-carrousel">
+          <button id="boutonPrecedentTemoignage" class="bouton-carrousel" aria-label="Témoignage précédent">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="15 18 9 12 15 6"/>
+            </svg>
+          </button>
+          
+          <div id="indicateursCarrouselTemoignages" class="indicateurs-carrousel" style="margin: 0 !important;"></div>
+          
+          <button id="boutonSuivantTemoignage" class="bouton-carrousel" aria-label="Témoignage suivant">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </button>
+        </div> <!-- Fin bloc-controles-carrousel -->
+      </div> <!-- Fin carrousel-temoignages -->
     </section>
   </main>
 
-  <div id="modaleVideo" class="modale-video" hidden>
-    <div class="modale-video-contenu">
-      <button id="fermerModaleVideo" aria-label="Fermer">&times;</button>
-      <div id="conteneurIframeVideo"></div>
-    </div>
-  </div>
-
   {{> _pied.html}}
-  <script src="/static/js/temoignages.js"></script>
+
+  <script>
+    window.addEventListener('load', () => {
+      let compteur = 0;
+      const intercepteur = setInterval(() => {
+        const btnSuivant = document.getElementById('boutonSuivantTemoignage');
+        const points = document.querySelectorAll('.point-indicateur');
+        if (btnSuivant && points.length > 0) {
+          if (window.minuteurDefilementAuto) {
+            clearInterval(window.minuteurDefilementAuto);
+          }
+          setInterval(() => {
+            btnSuivant.click();
+          }, 12000);
+          clearInterval(intercepteur);
+        }
+        if (++compteur > 30) clearInterval(intercepteur);
+      }, 200);
+    });
+  </script>
 </body>
 </html>
