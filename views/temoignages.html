@@ -63,7 +63,7 @@
     }
 
     /* ==========================================================================
-       RENDU ORDINATEUR : DEUX COLONNES STRUCTURÉES VIA LA DIAPOSITIVE
+       RENDU ORDINATEUR : ENRICHIT AVEC LA BORDURE ANIMÉE TOURNANTE
        ========================================================================== */
     .diapositive-temoignage {
       display: flex !important;
@@ -75,15 +75,31 @@
       background: #ffffff !important;
       border-radius: 16px !important;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+      
+      /* Paramètres de la bordure magique tournante */
+      position: relative !important;
+      border: 3px solid transparent !important;
+      background-clip: padding-box !important;
     }
 
-    /* Taille de la photo sur Ordinateur */
+    /* Le dégradé progressif multicolore en arrière-plan */
+    .diapositive-temoignage::before {
+      content: '' !important;
+      position: absolute !important;
+      top: -3px !important; left: -3px !important; right: -3px !important; bottom: -3px !important;
+      background: conic-gradient(#A32626, #0077b6, #e9c46a, #A32626) !important;
+      border-radius: 16px !important;
+      z-index: -1 !important;
+      animation: rotationBordureTemoignage 8s linear infinite !important;
+    }
+
+    /* Taille de la photo légèrement augmentée sur Ordinateur */
     .diapositive-temoignage img {
       display: block !important;
-      width: 150px !important;
-      height: 150px !important;
-      min-width: 150px !important;
-      min-height: 150px !important;
+      width: 165px !important; /* Modifié de 150px à 165px pour être plus grand */
+      height: 165px !important;
+      min-width: 165px !important;
+      min-height: 165px !important;
       object-fit: cover !important;
       border-radius: 12px !important;
       border: 3px solid #A32626 !important;
@@ -161,6 +177,12 @@
       color: #A32626 !important;
     }
 
+    /* KEYFRAME DE LA ROTATION MULTICOLORE */
+    @keyframes rotationBordureTemoignage {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
     /* ==========================================================================
        RENDU MOBILE : UNE SEULE COLONNE PARFAITEMENT RE-ORDONNÉE EN CSS
        ========================================================================== */
@@ -182,10 +204,10 @@
 
       .diapositive-temoignage img {
         order: 2 !important; /* La photo en deuxième position */
-        width: 160px !important; /* Grande taille demandée */
-        height: 160px !important;
-        min-width: 160px !important;
-        min-height: 160px !important;
+        width: 165px !important; /* Grande taille demandée conservée */
+        height: 165px !important;
+        min-width: 165px !important;
+        min-height: 165px !important;
         margin: 0 auto !important;
       }
 
@@ -237,7 +259,6 @@
           </button>
           
           <div id="indicateursCarrouselTemoignages" class="indicateurs-carrousel" style="margin: 0 !important;"></div>
-          
           <button id="boutonSuivantTemoignage" class="bouton-carrousel" aria-label="Témoignage suivant">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
           </button>
