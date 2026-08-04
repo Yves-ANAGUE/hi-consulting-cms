@@ -16,15 +16,41 @@
     main h2 {
       margin-top: 4.5rem !important;
       margin-bottom: 1.5rem;
+      text-transform: uppercase; /* Force le passage en majuscules de tous les h2 du main */
     }
     /* Ajustement spécifique pour éviter que le premier titre colle au héros */
     .section-apropos h2 {
       margin-top: 4rem !important;
+      text-align: center; /* Centre le titre de la section À Propos */
     }
     /* Bordure discrète sous chaque section de la page (sauf la dernière) */
     main section:not(.section-actualites-apercu) {
       border-bottom: 1px solid rgba(0, 0, 0, 0.08);
       padding-bottom: 4rem;
+    }
+    /* Style personnalisé pour le mot IMMIGRATION */
+    .texte-rouge-vif {
+      color: #B30000 !important; /* Rouge foncé et vif */
+      font-weight: bold;
+    }
+    /* Force le passage en majuscules des sous-titres h3 demandés */
+    .carte-mission-vision h3 {
+      text-transform: uppercase;
+    }
+    /* Style pour la mise en valeur des paragraphes d'accueil */
+    .bloc-introduction {
+      max-width: 800px;
+      margin: 0 auto 3rem auto;
+      text-align: center;
+      line-height: 1.8;
+      font-size: 1.15rem;
+      color: #333333;
+    }
+    .bloc-introduction p {
+      margin-bottom: 1.5rem;
+    }
+    .bloc-introduction p:last-child {
+      margin-bottom: 0;
     }
   </style>
 
@@ -43,7 +69,7 @@
       <div class="conteneur heros-contenu">
         <div class="heros-marque">
           <img src="{{urlLogo}}" alt="HI CONSULTING IMMIGRATION" onerror="this.onerror=null;this.src='/static/images/logo_HICI.jpg';">
-          <span>HI CONSULTING<small>IMMIGRATION</small></span>
+          <span>HI CONSULTING<small class="texte-rouge-vif">IMMIGRATION</small></span>
         </div>
         <span class="heros-etiquette">Réussir au Canada</span>
         <h1><span id="texteMachineAEcrire" class="machine-a-ecrire"></span></h1>
@@ -59,22 +85,26 @@
     </section>
 
     <section class="section-apropos conteneur">
-      <h2 data-cle-i18n="accueil_apropos_titre">Qui sommes-nous ?</h2>
-      <p id="texteAproposEntreprise" data-cle-i18n="accueil_apropos_texte">
-        HI CONSULTING IMMIGRATION accompagne depuis octobre 2020 les candidats à l'immigration vers le Canada,
-        la France, l'Italie et la Belgique. Implantée à Douala, notre agence s'est spécialisée depuis 2025 dans
-        les procédures d'immigration du Canada : résidence permanente, Entrée Express et ARRIMA.
-      </p>
+      <h2>QUI SOMMES-NOUS ?</h2>
+      
+      <div class="bloc-introduction">
+        <p>
+          Depuis Octobre 2020, <strong>HI CONSULTING IMMIGRATION</strong> accompagne ceux et celles qui rêvent de bâtir leur avenir au Canada à travers des procédures de : Résidence Permanente, Études, Permis de Travail et Visa Visiteur. Basé à Douala, nous sommes un cabinet d'immigration de confiance, reconnu pour notre efficacité, notre transparence et la qualité de notre accompagnement de A à Z.
+        </p>
+        <p>
+          Notre particularité se retrouve dans une approche personnalisée du voyage. Nous travaillons main dans la main avec chaque client pour concevoir un projet d’immigration qui répond à ses attentes. Au-delà du Visa, nous assurons aussi un <strong>suivi post-visa</strong> pour une intégration réussie. <strong>HI CONSULTING IMMIGRATION</strong> : votre projet, notre engagement.
+        </p>
+      </div>
 
       <div class="grille-mission-vision">
         <div class="carte-mission-vision">
           <img src="{{urlImageMission}}" alt="Mission de HI CONSULTING IMMIGRATION" class="image-mission-vision" loading="lazy">
-          <h3 data-cle-i18n="accueil_mission_titre">Notre mission</h3>
+          <h3>NOTRE MISSION</h3>
           <p id="texteMissionEntreprise"></p>
         </div>
         <div class="carte-mission-vision">
           <img src="{{urlImageVision}}" alt="Vision de HI CONSULTING IMMIGRATION" class="image-mission-vision" loading="lazy">
-          <h3 data-cle-i18n="accueil_vision_titre">Notre vision</h3>
+          <h3>NOTRE VISION</h3>
           <p id="texteVisionEntreprise"></p>
         </div>
       </div>
@@ -82,7 +112,7 @@
 
     <section class="section-equipe">
       <div class="conteneur">
-        <h2 data-cle-i18n="accueil_equipe_titre">Notre équipe</h2>
+        <h2>NOTRE ÉQUIPE</h2>
       </div>
       <div id="diaporamaEquipe" class="diaporama-equipe" aria-label="Photos de l'équipe HI CONSULTING IMMIGRATION">
         <div class="squelette-carte squelette-diaporama-equipe"></div>
@@ -92,7 +122,7 @@
 
     <section class="section-locaux conteneur section-avec-formes">
       <div class="forme-decorative forme-cercle" style="width:160px;height:160px;background:var(--degrade-ciel);bottom:-40px;left:-40px;opacity:0.25;"></div>
-      <h2 data-cle-i18n="section_locaux_titre">Nos locaux</h2>
+      <h2>NOS LOCAUX</h2>
       <p data-cle-i18n="section_locaux_texte">Découvrez notre agence à Douala, où nous accueillons chaque candidat avec attention.</p>
       <div id="grillePhotosLocaux" class="grille-photogrid">
         <div class="squelette-carte"></div>
@@ -103,7 +133,7 @@
     </section>
 
     <section class="section-services-apercu conteneur">
-      <h2 data-cle-i18n="accueil_services_titre">Nos services phares</h2>
+      <h2>NOS SERVICES PHARES</h2>
       <div id="grilleServicesApercu" class="grille-cartes" data-nombre-max="3">
         <div class="squelette-carte"></div>
         <div class="squelette-carte"></div>
@@ -112,7 +142,7 @@
     </section>
 
     <section class="section-formulaire-rapide conteneur">
-      <h2 data-cle-i18n="accueil_formulaire_titre" style="text-align: center;">Évaluez votre projet gratuitement</h2>
+      <h2 style="text-align: center;">ÉVALUEZ VOTRE PROJET GRATUITEMENT</h2>
       <form id="formulaireEvaluationAccueil" class="formulaire-evaluation">
         <div class="ligne-formulaire">
           <input type="text" name="nomComplet" data-placeholder-i18n="ph_nom_complet" placeholder="Nom complet" required>
@@ -139,7 +169,7 @@
 
     <section class="section-actualites-apercu conteneur">
       <div class="entete-section-flex">
-        <h2 data-cle-i18n="accueil_actualites_titre">Dernières actualités migratoires</h2>
+        <h2>DERNIÈRES ACTUALITÉS MIGRATOIRES</h2>
         <a href="/actualites" class="lien-voir-tout" data-cle-i18n="voir_tout">Voir tout →</a>
       </div>
       <div id="grilleActualitesApercu" class="grille-cartes" data-nombre-max="3">
