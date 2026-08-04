@@ -39,6 +39,18 @@
     }
     
     /* ==========================================================================
+       STYLE POUR RENDRE LA VIDÉO / MÉDIA DU HÉROS PLUS VISIBLE ET MOINS FLOUTÉ
+       ========================================================================== */
+    .section-heros video,
+    .section-heros iframe,
+    .section-heros .contenant-media,
+    .section-heros [class*="media"],
+    .section-heros [class*="hero"] video {
+      filter: blur(2px) !important; /* Flou très léger pour garder la lisibilité du texte tout en voyant la vidéo */
+      opacity: 0.45 !important;    /* Augmente la visibilité (généralement bridée à 0.2 ou 0.3) */
+    }
+    
+    /* ==========================================================================
        STYLE DU BLOC INTRODUCTION AVEC BORDURE TOURNANTE MULTICOLORE
        ========================================================================== */
     .conteneur-introduction {
