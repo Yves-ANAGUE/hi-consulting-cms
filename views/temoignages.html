@@ -63,40 +63,28 @@
     }
 
     /* ==========================================================================
-       RENDU ORDINATEUR : ENRICHIT AVEC LA BORDURE ANIMÉE TOURNANTE
+       RENDU ORDINATEUR : DEUX COLONNES STRUCTURÉES VIA LA DIAPOSITIVE
        ========================================================================== */
     .diapositive-temoignage {
       display: flex !important;
-      flex-direction: row !important;
+      flex-direction: row !important; /* Strictement horizontal */
       justify-content: flex-start !important;
       align-items: start !important;
       gap: 3rem !important;
       padding: 2.5rem !important;
       background: #ffffff !important;
       border-radius: 16px !important;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
-      
-      /* Paramètres de la bordure magique tournante */
-      position: relative !important;
-      border: 3px solid transparent !important;
-      background-clip: padding-box !important;
+      box-sizing: border-box !important;
+
+      /* NOUVELLE BORDURE ANIMÉE DISCRÈTE (Aucun élément derrière, pas de bug vertical) */
+      border: 3px solid #A32626 !important;
+      animation: lueurBordureMulticolore 6s linear infinite !important;
     }
 
-    /* Le dégradé progressif multicolore en arrière-plan */
-    .diapositive-temoignage::before {
-      content: '' !important;
-      position: absolute !important;
-      top: -3px !important; left: -3px !important; right: -3px !important; bottom: -3px !important;
-      background: conic-gradient(#A32626, #0077b6, #e9c46a, #A32626) !important;
-      border-radius: 16px !important;
-      z-index: -1 !important;
-      animation: rotationBordureTemoignage 8s linear infinite !important;
-    }
-
-    /* Taille de la photo légèrement augmentée sur Ordinateur */
+    /* Taille de la photo sur Ordinateur (Légèrement plus grande) */
     .diapositive-temoignage img {
       display: block !important;
-      width: 165px !important; /* Modifié de 150px à 165px pour être plus grand */
+      width: 165px !important; /* Agrandie proprement */
       height: 165px !important;
       min-width: 165px !important;
       min-height: 165px !important;
@@ -177,10 +165,12 @@
       color: #A32626 !important;
     }
 
-    /* KEYFRAME DE LA ROTATION MULTICOLORE */
-    @keyframes rotationBordureTemoignage {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    /* ANIMATION DE COULEURS PROGRESSIVES SUR LA BORDURE DIRECTE */
+    @keyframes lueurBordureMulticolore {
+      0% { border-color: #A32626; box-shadow: 0 10px 30px rgba(163, 38, 38, 0.08); }
+      33% { border-color: #0077b6; box-shadow: 0 10px 30px rgba(0, 119, 182, 0.08); }
+      66% { border-color: #e9c46a; box-shadow: 0 10px 30px rgba(233, 196, 106, 0.08); }
+      100% { border-color: #A32626; box-shadow: 0 10px 30px rgba(163, 38, 38, 0.08); }
     }
 
     /* ==========================================================================
@@ -189,7 +179,7 @@
     @media (max-width: 768px) {
       .diapositive-temoignage {
         display: flex !important;
-        flex-direction: column !important; /* Tout empiler verticalement */
+        flex-direction: column !important; /* Tout empiler verticalement sur mobile */
         align-items: center !important;
         text-align: center !important;
         padding: 1.5rem !important;
@@ -204,7 +194,7 @@
 
       .diapositive-temoignage img {
         order: 2 !important; /* La photo en deuxième position */
-        width: 165px !important; /* Grande taille demandée conservée */
+        width: 165px !important;
         height: 165px !important;
         min-width: 165px !important;
         min-height: 165px !important;
