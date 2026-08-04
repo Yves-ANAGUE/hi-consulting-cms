@@ -8,24 +8,22 @@
   <link rel="stylesheet" href="/static/css/style.css">
   
   <style>
-    /* Force le footer à rester collé tout en bas de la page sans laisser de vide */
+    /* Bloque le footer tout en bas de la page */
     html, body {
       height: 100% !important;
       margin: 0 !important;
       padding: 0 !important;
     }
-    
     body {
       display: flex !important;
       flex-direction: column !important;
     }
-
     main {
-      flex: 1 0 auto !important; /* Pousse le footer vers le bas */
+      flex: 1 0 auto !important;
     }
 
     /* ==========================================================================
-       STRUCTURE DE BASE ET COMPACTAGE DES CARTES
+       ARCHITECTURE DU CARROUSEL
        ========================================================================== */
     .carrousel-temoignages {
       position: relative !important;
@@ -40,10 +38,11 @@
     .piste-carrousel-temoignages {
       position: relative !important;
       width: 100% !important;
-      min-height: 340px !important; /* Maintient une hauteur stable pour éviter les sauts de page */
+      min-height: 350px !important;
       display: block !important;
     }
 
+    /* Gestion des transitions gérées par votre JS */
     .diapositive-temoignage {
       position: absolute !important;
       top: 0 !important;
@@ -64,67 +63,44 @@
     }
 
     /* ==========================================================================
-       RENDU ORDINATEUR : DEUX COLONNES STRUCTURÉES (GAUCHE / DROITE)
+       RENDU ORDINATEUR : DEUX COLONNES STRUCTURÉES VIA LA DIAPOSITIVE
        ========================================================================== */
-    .diapositive-temoignage > div,
-    [class*="carte-temoignage"] {
-      display: grid !important;
-      grid-template-columns: 180px 1fr !important; /* Strictement 2 colonnes */
-      gap: 2.5rem !important;
+    .diapositive-temoignage {
+      display: flex !important;
+      flex-direction: row !important;
+      justify-content: flex-start !important;
       align-items: start !important;
+      gap: 3rem !important;
       padding: 2.5rem !important;
       background: #ffffff !important;
       border-radius: 16px !important;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
-      box-sizing: border-box !important;
-      width: 100% !important;
     }
 
-    /* Bloc Identité (Colonne Gauche sur ordinateur) */
-    .diapositive-temoignage img,
-    [class*="carte-temoignage"] img,
-    .avatar-temoignage {
+    /* Taille de la photo sur Ordinateur */
+    .diapositive-temoignage img {
       display: block !important;
-      width: 150px !important; /* Taille agrandie et nette */
+      width: 150px !important;
       height: 150px !important;
       min-width: 150px !important;
       min-height: 150px !important;
       object-fit: cover !important;
       border-radius: 12px !important;
       border: 3px solid #A32626 !important;
-      margin: 0 0 1rem 0 !important;
+      margin: 0 !important;
       box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08) !important;
     }
 
-    /* Aligne tous les textes d'identité sous la photo */
-    .diapositive-temoignage h3, [class*="carte-temoignage"] h3,
-    [class*="nom"], [class*="etoile"], [class*="pays"], .info-temoignage {
-      text-align: left !important;
-      margin: 0 0 0.4rem 0 !important;
-      display: block !important;
-      width: 100% !important;
-    }
-
-    .diapositive-temoignage h3, [class*="carte-temoignage"] h3 {
+    /* Style global des textes intérieurs injectés */
+    .diapositive-temoignage h3 {
       font-size: 1.2rem !important;
       font-weight: 700 !important;
       color: #1a1a1a !important;
-      margin-top: 0.5rem !important;
+      margin: 0.5rem 0 0.3rem 0 !important;
     }
 
-    /* Bloc Contenu (Colonne Droite sur ordinateur) */
-    /* Empêche les éléments de se séparer en colonnes distinctes */
-    .diapositive-temoignage div > :not(img):not(h3):not([class*="etoile"]):not([class*="pays"]):not(.info-temoignage) {
-      display: flex !important;
-      flex-direction: column !important; /* Aligne verticalement bouton puis texte */
-      align-items: flex-start !important;
-      gap: 1.2rem !important;
-      width: 100% !important;
-    }
-
-    /* Bouton d'action vidéo */
+    /* Bouton vidéo d'action (.bouton-voir-video généré par votre script) */
     .bouton-voir-video {
-      order: -1 !important; /* Force le bouton à rester tout en haut */
       background-color: #A32626 !important;
       color: #ffffff !important;
       border: none !important;
@@ -135,7 +111,8 @@
       cursor: pointer !important;
       transition: all 0.2s ease !important;
       box-shadow: 0 4px 12px rgba(163, 38, 38, 0.15) !important;
-      width: auto !important;
+      margin-bottom: 1rem !important;
+      display: inline-block !important;
     }
 
     .bouton-voir-video:hover {
@@ -143,15 +120,11 @@
       transform: translateY(-2px) !important;
     }
 
-    /* Style du récit textuel */
-    .diapositive-temoignage p,
-    [class*="carte-temoignage"] p,
-    .texte-temoignage {
+    .diapositive-temoignage p {
       font-size: 1.05rem !important;
       line-height: 1.6 !important;
       color: #4a4a4a !important;
       margin: 0 !important;
-      text-align: left !important;
     }
 
     /* ==========================================================================
@@ -189,61 +162,49 @@
     }
 
     /* ==========================================================================
-       RENDU MOBILE : UNE SEULE COLONNE PARFAITEMENT ORDONNÉE
+       RENDU MOBILE : UNE SEULE COLONNE PARFAITEMENT RE-ORDONNÉE EN CSS
        ========================================================================== */
     @media (max-width: 768px) {
-      .diapositive-temoignage > div,
-      [class*="carte-temoignage"] {
+      .diapositive-temoignage {
         display: flex !important;
-        flex-direction: column !important; /* Force l'affichage sur une seule colonne */
+        flex-direction: column !important; /* Tout empiler verticalement */
         align-items: center !important;
         text-align: center !important;
         padding: 1.5rem !important;
-        gap: 1.5rem !important;
+        gap: 1rem !important;
       }
 
-      /* Gestion de l'ordre d'affichage demandé sur mobile */
+      /* Rangement dans l'ordre exact demandé sur mobile via CSS Order */
       .bouton-voir-video {
-        order: 1 !important; /* Le bouton vidéo se place tout en haut */
-        margin: 0 auto !important;
+        order: 1 !important; /* Le bouton vidéo en premier tout en haut */
+        margin: 0 auto 0.5rem auto !important;
       }
 
-      .diapositive-temoignage img,
-      [class*="carte-temoignage"] img,
-      .avatar-temoignage {
-        order: 2 !important; /* La photo se place en deuxième position */
-        width: 160px !important; /* Photo très grande et bien visible */
+      .diapositive-temoignage img {
+        order: 2 !important; /* La photo en deuxième position */
+        width: 160px !important; /* Grande taille demandée */
         height: 160px !important;
         min-width: 160px !important;
         min-height: 160px !important;
         margin: 0 auto !important;
       }
 
-      /* Le nom, les étoiles et le pays s'empilent en dessous de la photo */
-      .diapositive-temoignage h3, [class*="carte-temoignage"] h3 { order: 3 !important; }
-      [class*="etoile"] { order: 4 !important; }
-      [class*="pays"] { order: 5 !important; }
+      .diapositive-temoignage h3 { 
+        order: 3 !important; 
+        text-align: center !important;
+      }
+      
+      /* Cible les textes complémentaires injectés (étoiles, pays) */
+      .diapositive-temoignage div, 
+      .diapositive-temoignage span { 
+        order: 4 !important; 
+        text-align: center !important;
+      }
 
-      /* Le texte descriptif se place tout en bas */
-      .diapositive-temoignage p,
-      [class*="carte-temoignage"] p,
-      .texte-temoignage {
-        order: 6 !important;
+      .diapositive-temoignage p {
+        order: 5 !important; /* Le texte de témoignage tout en bas */
         text-align: center !important;
         margin: 0 auto !important;
-      }
-
-      /* Recentrage forcé de tous les sous-éléments */
-      .diapositive-temoignage h3, [class*="carte-temoignage"] h3,
-      [class*="nom"], [class*="etoile"], [class*="pays"], .info-temoignage {
-        text-align: center !important;
-        margin: 0 auto 0.3rem auto !important;
-        width: auto !important;
-      }
-
-      .diapositive-temoignage div > :not(img):not(h3):not([class*="etoile"]):not([class*="pays"]):not(.info-temoignage) {
-        align-items: center !important;
-        order: 6 !important; /* Aligne le bloc texte restant tout en bas */
       }
     }
   </style>
@@ -262,49 +223,60 @@
     <section class="conteneur section-sans-haut">
       <div class="carrousel-temoignages">
         
+        <!-- Piste cible directe de votre script temoignages.js -->
         <div id="pisteCarrouselTemoignages" class="piste-carrousel-temoignages">
           <div class="squelette-carte"></div>
           <div class="squelette-carte"></div>
           <div class="squelette-carte"></div>
         </div>
         
+        <!-- Zone des boutons de contrôle centrés en dessous -->
         <div class="bloc-controles-carrousel">
           <button id="boutonPrecedentTemoignage" class="bouton-carrousel" aria-label="Témoignage précédent">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="15 18 9 12 15 6"/>
-            </svg>
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
           </button>
           
           <div id="indicateursCarrouselTemoignages" class="indicateurs-carrousel" style="margin: 0 !important;"></div>
           
           <button id="boutonSuivantTemoignage" class="bouton-carrousel" aria-label="Témoignage suivant">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="9 18 15 12 9 6"/>
-            </svg>
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
           </button>
-        </div> <!-- Fin bloc-controles-carrousel -->
-      </div> <!-- Fin carrousel-temoignages -->
+        </div>
+
+      </div>
     </section>
   </main>
 
-  {{> _pied.html}}
+  <div id="modaleVideo" class="modale-video" hidden>
+    <div class="modale-video-contenu">
+      <button id="fermerModaleVideo" aria-label="Fermer">&times;</button>
+      <div id="conteneurIframeVideo"></div>
+    </div>
+  </div>
 
+  {{> _pied.html}}
+  <script src="/static/js/temoignages.js"></script>
+
+  <!-- Script de ralentissement du carrousel à 12 secondes -->
   <script>
     window.addEventListener('load', () => {
-      let compteur = 0;
-      const intercepteur = setInterval(() => {
+      let boucle = 0;
+      const intercepteurMinuteur = setInterval(() => {
         const btnSuivant = document.getElementById('boutonSuivantTemoignage');
         const points = document.querySelectorAll('.point-indicateur');
+        
         if (btnSuivant && points.length > 0) {
           if (window.minuteurDefilementAuto) {
             clearInterval(window.minuteurDefilementAuto);
           }
+          // Nouveau cycle de 12 secondes
           setInterval(() => {
             btnSuivant.click();
           }, 12000);
-          clearInterval(intercepteur);
+
+          clearInterval(intercepteurMinuteur);
         }
-        if (++compteur > 30) clearInterval(intercepteur);
+        if (++boucle > 30) clearInterval(intercepteurMinuteur);
       }, 200);
     });
   </script>
