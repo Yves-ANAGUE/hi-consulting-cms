@@ -37,25 +37,88 @@
     .carte-mission-vision h3 {
       text-transform: uppercase;
     }
-    /* Style pour le bloc d'introduction avec couleur de fond légère */
-    .bloc-introduction {
+    
+    /* ==========================================================================
+       STYLE DU BLOC INTRODUCTION AVEC BORDURE TOURNANTE MULTICOLORE
+       ========================================================================== */
+    .conteneur-introduction {
+      position: relative;
       max-width: 850px;
       margin: 0 auto 3.5rem auto;
+      padding: 3px; /* Épaisseur de la bordure animée */
+      background: transparent;
+      border-radius: 16px;
+      overflow: hidden; /* Masque tout ce qui dépasse du cadre pour l'effet rotation */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Le dégradé de couleurs progressives qui va tourner en arrière-plan */
+    .conteneur-introduction::before {
+      content: '';
+      position: absolute;
+      width: 150%;
+      height: 150%;
+      /* Palette de couleurs progressives : bordeaux, bleu ciel, or, rouge */
+      background: conic-gradient(#A32626, #0077b6, #e9c46a, #A32626);
+      animation: rotationBordure 6s linear infinite;
+      z-index: 1;
+    }
+
+    /* Le fond gris-bleu clair qui se superpose pour ne laisser voir que la bordure */
+    .bloc-introduction {
+      position: relative;
+      width: 100%;
+      background-color: #f8fafc; /* Gris-bleu très doux */
+      padding: 2.5rem;
+      border-radius: 14px; /* Un poil plus petit que le conteneur pour suivre la courbe */
+      z-index: 2;
       text-align: center;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+    }
+
+    /* Animation du texte intérieur (effet de fondu et de flottement calme) */
+    .bloc-introduction p {
       line-height: 1.8;
       font-size: 1.15rem;
       color: #333333;
-      background-color: #f8fafc; /* Couleur de fond très douce (gris-bleu clair) */
-      padding: 2.5rem;
-      border-radius: 12px; /* Coins arrondis */
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02); /* Ombre très discrète */
-      border: 1px solid rgba(0, 0, 0, 0.04);
-    }
-    .bloc-introduction p {
       margin-bottom: 1.5rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: apparitionTexte 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
     }
-    .bloc-introduction p:last-child {
+    
+    .bloc-introduction p:nth-child(1) {
+      animation-delay: 0.2s; /* Décale l'apparition du premier paragraphe */
+    }
+    
+    .bloc-introduction p:nth-child(2) {
       margin-bottom: 0;
+      animation-delay: 0.5s; /* Décale l'apparition du second paragraphe */
+    }
+
+    /* ==========================================================================
+       KEYFRAMES ANIMATIONS CSS
+       ========================================================================== */
+    @keyframes rotationBordure {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes apparitionTexte {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 
@@ -92,13 +155,16 @@
     <section class="section-apropos conteneur">
       <h2>QUI SOMMES-NOUS ?</h2>
       
-      <div class="bloc-introduction">
-        <p>
-          Depuis Octobre 2020, <strong>HI CONSULTING IMMIGRATION</strong> accompagne ceux et celles qui rêvent de bâtir leur avenir au Canada à travers des procédures de : Résidence Permanente, Études, Permis de Travail et Visa Visiteur. Basé à Douala, nous sommes un cabinet d'immigration de confiance, reconnu pour notre efficacité, notre transparence et la quality de notre accompagnement de A à Z.
-        </p>
-        <p>
-          Notre particularité se retrouve dans une approche personnalisée du voyage. Nous travaillons main dans la main avec chaque client pour concevoir un projet d’immigration qui répond à ses attentes. Au-delà du Visa, nous assurons aussi un <strong>suivi post-visa</strong> pour une intégration réussie. <strong>HI CONSULTING IMMIGRATION</strong> : votre projet, notre engagement.
-        </p>
+      <!-- Wrapper requis pour la gestion de la bordure tournante autonome -->
+      <div class="conteneur-introduction">
+        <div class="bloc-introduction">
+          <p>
+            Depuis Octobre 2020, <strong>HI CONSULTING IMMIGRATION</strong> accompagne ceux et celles qui rêvent de bâtir leur avenir au Canada à travers des procédures de : Résidence Permanente, Études, Permis de Travail et Visa Visiteur. Basé à Douala, nous sommes un cabinet d'immigration de confiance, reconnu pour notre efficacité, notre transparence et la qualité de notre accompagnement de A à Z.
+          </p>
+          <p>
+            Notre particularité se retrouve dans une approche personnalisée du voyage. Nous travaillons main dans la main avec chaque client pour concevoir un projet d’immigration qui répond à ses attentes. Au-delà du Visa, nous assurons aussi un <strong>suivi post-visa</strong> pour une intégration réussie. <strong>HI CONSULTING IMMIGRATION</strong> : votre projet, notre engagement.
+          </p>
+        </div>
       </div>
 
       <div class="grille-mission-vision">
