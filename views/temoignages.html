@@ -6,6 +6,42 @@
   {{balisesMeta}}
   <link rel="icon" href="/static/images/logo_HICI.jpg">
   <link rel="stylesheet" href="/static/css/style.css">
+  
+  <!-- Personnalisation de l'affichage des cartes de témoignages -->
+  <style>
+    /* Force les cartes du carrousel à empiler les éléments verticalement */
+    .piste-carrousel-temoignages > div,
+    .carte-temoignage {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      text-align: center !important;
+      padding: 2.5rem 1.5rem !important;
+    }
+
+    /* Repositionne la photo tout en haut et l'agrandit */
+    .piste-carrousel-temoignages img,
+    .carte-temoignage img,
+    .avatar-temoignage {
+      order: -1 !important; /* Force l'image à passer au-dessus des autres éléments */
+      width: 120px !important; /* Augmentation de la taille (généralement 60px à 80px) */
+      height: 120px !important;
+      max-width: 120px !important;
+      max-height: 120px !important;
+      object-fit: cover !important;
+      border-radius: 50% !important; /* Conserve la photo parfaitement ronde */
+      margin-bottom: 1.5rem !important; /* Espace entre la photo et les textes en bas */
+      border: 3px solid var(--couleur-primaire, #A32626); /* Ajout d'une bordure élégante */
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Réalignement du bloc de contenu textuel (nom, texte, étoiles) */
+    .contenu-temoignage,
+    .texte-temoignage {
+      width: 100% !important;
+    }
+  </style>
+
   <script type="application/ld+json">{{schemaTemoignages}}</script>
 </head>
 <body>
