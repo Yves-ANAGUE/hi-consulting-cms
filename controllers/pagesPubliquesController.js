@@ -72,8 +72,8 @@ async function obtenirParametresSite() {
   return {
     urlLogo: ligne?.url_logo || '/static/images/logo_HICI.jpg',
     whatsappFlottant: ligne?.url_whatsapp_flottant || '',
-    urlImageMission: ligne?.url_image_mission || 'https://picsum.photos/seed/hi-consulting-mission/600/400',
-    urlImageVision: ligne?.url_image_vision || 'https://picsum.photos/seed/hi-consulting-vision/600/400',
+    urlImageMission: ligne?.url_image_mission || 'https://res.cloudinary.com/jmqph5iy/image/upload/v1785835978/photo_mission_le5ce8.jpg',
+    urlImageVision: ligne?.url_image_vision || 'https://res.cloudinary.com/jmqph5iy/image/upload/v1785838881/image_notre_vision_q91sli.jpg',
     blocCarteGoogleMaps: urlGoogleMaps
       ? `<iframe src="${urlGoogleMaps}" width="100%" height="300" style="border:0;border-radius:10px;" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>`
       : `<p class="texte-secondaire">Localisation Google Maps configurable depuis le Back-Office (onglet Configuration Google).</p>`,

@@ -451,8 +451,8 @@ async function seederConfigurationSite() {
     [
       '237678924045',
       'https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d761.5990300722099!2d9.767887998886145!3d4.080652348274601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sLogpom%2C%20Carrefour%20Bassong%2C%20Douala!5e0!3m2!1sfr!2scm!4v1783452413876!5m2!1sfr!2scm',
-      'https://picsum.photos/seed/hi-consulting-mission/600/400',
-      'https://picsum.photos/seed/hi-consulting-vision/600/400'
+      'https://res.cloudinary.com/jmqph5iy/image/upload/v1785835978/photo_mission_le5ce8.jpg',
+      'https://res.cloudinary.com/jmqph5iy/image/upload/v1785838881/image_notre_vision_q91sli.jpg'
     ]
   );
   console.log('[Seed] Numéro WhatsApp flottant, lien Google Maps et images Mission/Vision initialisés par défaut.');
