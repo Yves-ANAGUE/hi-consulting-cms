@@ -101,11 +101,7 @@
       animation: apparitionTexte 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
     }
     
-    .bloc-introduction p:nth-child(1) {
-      animation-delay: 0.2s; /* Décale l'apparition du premier paragraphe */
-    }
-    
-    .bloc-introduction p:nth-child(2) {
+    .bloc-introduction p:last-child {
       margin-bottom: 0;
       animation-delay: 0.5s; /* Décale l'apparition du second paragraphe */
     }
@@ -136,6 +132,19 @@
     /* Style pour les titres avec attribut data-cle-i18n - ils restent en majuscules */
     h2[data-cle-i18n] {
       text-transform: uppercase;
+    }
+
+    /* Style pour le texte du bloc introduction */
+    .texte-introduction {
+      white-space: pre-line;
+    }
+    
+    .texte-introduction p {
+      margin-bottom: 1.5rem;
+    }
+    
+    .texte-introduction p:last-child {
+      margin-bottom: 0;
     }
   </style>
 
@@ -175,21 +184,14 @@
       <!-- Wrapper requis pour la gestion de la bordure tournante autonome -->
       <div class="conteneur-introduction">
         <div class="bloc-introduction">
-          <!-- Le texte est maintenant géré par le backend via les variables, avec fallback si vide -->
-          <p id="texteAproposEntreprise" data-cle-i18n="accueil_apropos_texte">
+          <div id="texteAproposEntreprise" data-cle-i18n="accueil_apropos_texte" class="texte-introduction">
             {{#if texteAproposEntreprise}}
               {{{texteAproposEntreprise}}}
             {{else}}
-              Depuis Octobre 2020, <strong>HI CONSULTING IMMIGRATION</strong> accompagne ceux et celles qui rêvent de bâtir leur avenir au Canada à travers des procédures de : Résidence Permanente, Études, Permis de Travail et Visa Visiteur. Basé à Douala, nous sommes un cabinet d'immigration de confiance, reconnu pour notre efficacité, notre transparence et la qualité de notre accompagnement de A à Z.
+              <p>Depuis Octobre 2020, <strong>HI CONSULTING IMMIGRATION</strong> accompagne ceux et celles qui rêvent de bâtir leur avenir au Canada à travers des procédures de : Résidence Permanente, Études, Permis de Travail et Visa Visiteur. Basé à Douala, nous sommes un cabinet d'immigration de confiance, reconnu pour notre efficacité, notre transparence et la qualité de notre accompagnement de A à Z.</p>
+              <p>Notre particularité se retrouve dans une approche personnalisée du voyage. Nous travaillons main dans la main avec chaque client pour concevoir un projet d'immigration qui répond à ses attentes. Au-delà du Visa, nous assurons aussi un <strong>suivi post-visa</strong> pour une intégration réussie. <strong>HI CONSULTING IMMIGRATION</strong> : votre projet, notre engagement.</p>
             {{/if}}
-          </p>
-          <p id="texteAproposEntreprise2" data-cle-i18n="accueil_apropos_texte_2">
-            {{#if texteAproposEntreprise2}}
-              {{{texteAproposEntreprise2}}}
-            {{else}}
-              Notre particularité se retrouve dans une approche personnalisée du voyage. Nous travaillons main dans la main avec chaque client pour concevoir un projet d'immigration qui répond à ses attentes. Au-delà du Visa, nous assurons aussi un <strong>suivi post-visa</strong> pour une intégration réussie. <strong>HI CONSULTING IMMIGRATION</strong> : votre projet, notre engagement.
-            {{/if}}
-          </p>
+          </div>
         </div>
       </div>
 
