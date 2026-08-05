@@ -132,6 +132,11 @@
         transform: translateY(0);
       }
     }
+
+    /* Style pour les titres avec attribut data-cle-i18n - ils restent en majuscules */
+    h2[data-cle-i18n] {
+      text-transform: uppercase;
+    }
   </style>
 
   <script type="application/ld+json">{{schemaLocalBusiness}}</script>
@@ -165,16 +170,24 @@
     </section>
 
     <section class="section-apropos conteneur">
-      <h2>QUI SOMMES-NOUS ?</h2>
+      <h2 data-cle-i18n="accueil_apropos_titre">QUI SOMMES-NOUS ?</h2>
       
       <!-- Wrapper requis pour la gestion de la bordure tournante autonome -->
       <div class="conteneur-introduction">
         <div class="bloc-introduction">
-          <p>
+          <!-- Version française par défaut -->
+          <p class="texte-intro-fr" data-cle-i18n="accueil_apropos_texte_1">
             Depuis Octobre 2020, <strong>HI CONSULTING IMMIGRATION</strong> accompagne ceux et celles qui rêvent de bâtir leur avenir au Canada à travers des procédures de : Résidence Permanente, Études, Permis de Travail et Visa Visiteur. Basé à Douala, nous sommes un cabinet d'immigration de confiance, reconnu pour notre efficacité, notre transparence et la qualité de notre accompagnement de A à Z.
           </p>
-          <p>
-            Notre particularité se retrouve dans une approche personnalisée du voyage. Nous travaillons main dans la main avec chaque client pour concevoir un projet d’immigration qui répond à ses attentes. Au-delà du Visa, nous assurons aussi un <strong>suivi post-visa</strong> pour une intégration réussie. <strong>HI CONSULTING IMMIGRATION</strong> : votre projet, notre engagement.
+          <p class="texte-intro-fr" data-cle-i18n="accueil_apropos_texte_2">
+            Notre particularité se retrouve dans une approche personnalisée du voyage. Nous travaillons main dans la main avec chaque client pour concevoir un projet d'immigration qui répond à ses attentes. Au-delà du Visa, nous assurons aussi un <strong>suivi post-visa</strong> pour une intégration réussie. <strong>HI CONSULTING IMMIGRATION</strong> : votre projet, notre engagement.
+          </p>
+          <!-- Version anglaise (sera affichée lors de la traduction) -->
+          <p class="texte-intro-en" data-cle-i18n="accueil_apropos_texte_1_en" style="display:none;">
+            Since October 2020, <strong>HI CONSULTING IMMIGRATION</strong> has been supporting those who dream of building their future in Canada through procedures for: Permanent Residence, Studies, Work Permits and Visitor Visas. Based in Douala, we are a trusted immigration firm, recognized for our efficiency, transparency and the quality of our support from A to Z.
+          </p>
+          <p class="texte-intro-en" data-cle-i18n="accueil_apropos_texte_2_en" style="display:none;">
+            Our particularity lies in a personalized approach to the journey. We work hand in hand with each client to design an immigration project that meets their expectations. Beyond the Visa, we also provide <strong>post-visa follow-up</strong> for successful integration. <strong>HI CONSULTING IMMIGRATION</strong>: your project, our commitment.
           </p>
         </div>
       </div>
@@ -182,20 +195,20 @@
       <div class="grille-mission-vision">
         <div class="carte-mission-vision">
           <img src="{{urlImageMission}}" alt="Mission de HI CONSULTING IMMIGRATION" class="image-mission-vision" loading="lazy">
-          <h3>NOTRE MISSION</h3>
-          <p id="texteMissionEntreprise"></p>
+          <h3 data-cle-i18n="accueil_mission_titre">NOTRE MISSION</h3>
+          <p id="texteMissionEntreprise" data-cle-i18n="accueil_mission_texte"></p>
         </div>
         <div class="carte-mission-vision">
           <img src="{{urlImageVision}}" alt="Vision de HI CONSULTING IMMIGRATION" class="image-mission-vision" loading="lazy">
-          <h3>NOTRE VISION</h3>
-          <p id="texteVisionEntreprise"></p>
+          <h3 data-cle-i18n="accueil_vision_titre">NOTRE VISION</h3>
+          <p id="texteVisionEntreprise" data-cle-i18n="accueil_vision_texte"></p>
         </div>
       </div>
     </section>
 
     <section class="section-equipe">
       <div class="conteneur">
-        <h2>NOTRE ÉQUIPE</h2>
+        <h2 data-cle-i18n="accueil_equipe_titre">NOTRE ÉQUIPE</h2>
       </div>
       <div id="diaporamaEquipe" class="diaporama-equipe" aria-label="Photos de l'équipe HI CONSULTING IMMIGRATION">
         <div class="squelette-carte squelette-diaporama-equipe"></div>
@@ -205,7 +218,7 @@
 
     <section class="section-locaux conteneur section-avec-formes">
       <div class="forme-decorative forme-cercle" style="width:160px;height:160px;background:var(--degrade-ciel);bottom:-40px;left:-40px;opacity:0.25;"></div>
-      <h2>NOS LOCAUX</h2>
+      <h2 data-cle-i18n="section_locaux_titre">NOS LOCAUX</h2>
       <p data-cle-i18n="section_locaux_texte">Découvrez notre agence à Douala, où nous accueillons chaque candidat avec attention.</p>
       <div id="grillePhotosLocaux" class="grille-photogrid">
         <div class="squelette-carte"></div>
@@ -216,7 +229,7 @@
     </section>
 
     <section class="section-services-apercu conteneur">
-      <h2>NOS SERVICES PHARES</h2>
+      <h2 data-cle-i18n="accueil_services_titre">NOS SERVICES PHARES</h2>
       <div id="grilleServicesApercu" class="grille-cartes" data-nombre-max="3">
         <div class="squelette-carte"></div>
         <div class="squelette-carte"></div>
@@ -225,7 +238,7 @@
     </section>
 
     <section class="section-formulaire-rapide conteneur">
-      <h2 style="text-align: center;">ÉVALUEZ VOTRE PROJET GRATUITEMENT</h2>
+      <h2 data-cle-i18n="accueil_formulaire_titre" style="text-align: center;">ÉVALUEZ VOTRE PROJET GRATUITEMENT</h2>
       <form id="formulaireEvaluationAccueil" class="formulaire-evaluation">
         <div class="ligne-formulaire">
           <input type="text" name="nomComplet" data-placeholder-i18n="ph_nom_complet" placeholder="Nom complet" required>
@@ -252,7 +265,7 @@
 
     <section class="section-actualites-apercu conteneur">
       <div class="entete-section-flex">
-        <h2>DERNIÈRES ACTUALITÉS MIGRATOIRES</h2>
+        <h2 data-cle-i18n="accueil_actualites_titre">DERNIÈRES ACTUALITÉS MIGRATOIRES</h2>
         <a href="/actualites" class="lien-voir-tout" data-cle-i18n="voir_tout">Voir tout →</a>
       </div>
       <div id="grilleActualitesApercu" class="grille-cartes" data-nombre-max="3">
@@ -266,5 +279,33 @@
   {{> _pied.html}}
   <script src="/static/js/typewriter.js"></script>
   <script src="/static/js/accueil.js"></script>
+  <script>
+    // Script pour gérer l'affichage des versions française/anglaise du texte d'introduction
+    document.addEventListener('DOMContentLoaded', function() {
+      // Fonction pour basculer entre les versions française et anglaise
+      function basculerLangueIntro(langue) {
+        var textesFR = document.querySelectorAll('.texte-intro-fr');
+        var textesEN = document.querySelectorAll('.texte-intro-en');
+        
+        if (langue === 'en') {
+          textesFR.forEach(function(el) { el.style.display = 'none'; });
+          textesEN.forEach(function(el) { el.style.display = 'block'; });
+        } else {
+          textesFR.forEach(function(el) { el.style.display = 'block'; });
+          textesEN.forEach(function(el) { el.style.display = 'none'; });
+        }
+      }
+
+      // Vérifier la langue actuelle (à adapter selon votre système de traduction)
+      // Si vous utilisez un sélecteur de langue, vous pouvez l'appeler ici
+      // Exemple : si la page est en anglais, appeler basculerLangueIntro('en')
+      
+      // Par défaut, on affiche le français
+      basculerLangueIntro('fr');
+      
+      // Si vous avez un mécanisme de traduction, vous pouvez ajouter un écouteur
+      // pour basculer quand la langue change
+    });
+  </script>
 </body>
 </html>
