@@ -135,16 +135,17 @@
     }
 
     /* Style pour le texte du bloc introduction */
-    .texte-introduction {
-      white-space: pre-line;
-    }
-    
     .texte-introduction p {
       margin-bottom: 1.5rem;
     }
     
     .texte-introduction p:last-child {
       margin-bottom: 0;
+    }
+    
+    /* Cacher temporairement le contenu par défaut pendant le chargement */
+    .texte-fallback {
+      display: none;
     }
   </style>
 
@@ -184,10 +185,17 @@
       <!-- Wrapper requis pour la gestion de la bordure tournante autonome -->
       <div class="conteneur-introduction">
         <div class="bloc-introduction">
-          <!-- Le texte par défaut est directement dans le HTML -->
-          <div id="texteAproposEntreprise" data-cle-i18n="accueil_apropos_texte" class="texte-introduction">
-            <p>Depuis Octobre 2020, <strong>HI CONSULTING IMMIGRATION</strong> accompagne ceux et celles qui rêvent de bâtir leur avenir au Canada à travers des procédures de : Résidence Permanente, Études, Permis de Travail et Visa Visiteur. Basé à Douala, nous sommes un cabinet d'immigration de confiance, reconnu pour notre efficacité, notre transparence et la qualité de notre accompagnement de A à Z.</p>
-            <p>Notre particularité se retrouve dans une approche personnalisée du voyage. Nous travaillons main dans la main avec chaque client pour concevoir un projet d'immigration qui répond à ses attentes. Au-delà du Visa, nous assurons aussi un <strong>suivi post-visa</strong> pour une intégration réussie. <strong>HI CONSULTING IMMIGRATION</strong> : votre projet, notre engagement.</p>
+          <!-- Conteneur pour le texte d'introduction avec fallback -->
+          <div id="texteAproposEntreprise" class="texte-introduction">
+            <!-- Le texte par défaut est inclus mais caché initialement -->
+            <div class="texte-fallback" id="fallbackFR">
+              <p>Depuis Octobre 2020, <strong>HI CONSULTING IMMIGRATION</strong> accompagne ceux et celles qui rêvent de bâtir leur avenir au Canada à travers des procédures de : Résidence Permanente, Études, Permis de Travail et Visa Visiteur. Basé à Douala, nous sommes un cabinet d'immigration de confiance, reconnu pour notre efficacité, notre transparence et la qualité de notre accompagnement de A à Z.</p>
+              <p>Notre particularité se retrouve dans une approche personnalisée du voyage. Nous travaillons main dans la main avec chaque client pour concevoir un projet d'immigration qui répond à ses attentes. Au-delà du Visa, nous assurons aussi un <strong>suivi post-visa</strong> pour une intégration réussie. <strong>HI CONSULTING IMMIGRATION</strong> : votre projet, notre engagement.</p>
+            </div>
+            <div class="texte-fallback" id="fallbackEN">
+              <p>Since October 2020, <strong>HI CONSULTING IMMIGRATION</strong> has been supporting those who dream of building their future in Canada through procedures for: Permanent Residence, Studies, Work Permits and Visitor Visas. Based in Douala, we are a trusted immigration firm, recognized for our efficiency, transparency and the quality of our support from A to Z.</p>
+              <p>Our particularity lies in a personalized approach to the journey. We work hand in hand with each client to design an immigration project that meets their expectations. Beyond the Visa, we also provide <strong>post-visa follow-up</strong> for successful integration. <strong>HI CONSULTING IMMIGRATION</strong>: your project, our commitment.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -283,12 +291,95 @@
   <!-- Script pour gérer le fallback du texte d'introduction -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Récupérer l'élément du texte d'introduction
-      var texteElement = document.getElementById('texteAproposEntreprise');
+      var container = document.getElementById('texteAproposEntreprise');
+      var fallbackFR = document.getElementById('fallbackFR');
+      var fallbackEN = document.getElementById('fallbackEN');
       
-      // Si l'élément existe et qu'il est vide, on garde le texte par défaut
-      // Le texte par défaut est déjà dans le HTML, donc on ne fait rien de spécial
-      // Le système de traduction gérera la traduction via data-cle-i18n
+      // Fonction pour détecter la langue actuelle
+      function getCurrentLanguage() {
+        // Vérifier si le système de traduction a une langue stockée
+        var lang = document.documentElement.lang || 'fr';
+        
+        // Vérifier si un sélecteur de langue est présent
+        var langSelector = document.querySelector('[data-lang]');
+        if (langSelector) {
+          return langSelector.getAttribute('data-lang');
+        }
+        
+        // Vérifier dans l'URL ou les cookies si nécessaire
+        return lang;
+      }
+      
+      // Fonction pour afficher le fallback approprié
+      function showFallback() {
+        var currentLang = getCurrentLanguage();
+        
+        // Cacher les deux fallbacks
+        if (fallbackFR) fallbackFR.style.display = 'none';
+        if (fallbackEN) fallbackEN.style.display = 'none';
+        
+        // Afficher le fallback correspondant à la langue
+        if (currentLang === 'en' && fallbackEN) {
+          fallbackEN.style.display = 'block';
+        } else if (fallbackFR) {
+          fallbackFR.style.display = 'block';
+        }
+      }
+      
+      // Vérifier si le contenu est vide (backend n'a pas fourni de texte)
+      // On vérifie si le container n'a que des enfants qui sont les fallbacks
+      function hasOnlyFallbacks() {
+        var children = container.children;
+        var fallbackCount = 0;
+        for (var i = 0; i < children.length; i++) {
+          if (children[i].classList && children[i].classList.contains('texte-fallback')) {
+            fallbackCount++;
+          } else {
+            // Si un enfant n'est pas un fallback, c'est que le backend a fourni du contenu
+            return false;
+          }
+        }
+        // Si tous les enfants sont des fallbacks, alors le backend est vide
+        return fallbackCount > 0;
+      }
+      
+      // Si le container est vide ou n'a que des fallbacks, afficher le fallback approprié
+      if (!container.innerHTML.trim() || hasOnlyFallbacks()) {
+        showFallback();
+      }
+      
+      // Écouter les changements de langue (si votre système de traduction déclenche des événements)
+      document.addEventListener('languageChanged', function(e) {
+        if (hasOnlyFallbacks()) {
+          showFallback();
+        }
+      });
+      
+      // Observer les changements de contenu (pour détecter quand le backend charge du contenu)
+      var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+            // Si du contenu a été ajouté par le backend, cacher les fallbacks
+            var hasNonFallback = false;
+            var children = container.children;
+            for (var i = 0; i < children.length; i++) {
+              if (!children[i].classList || !children[i].classList.contains('texte-fallback')) {
+                hasNonFallback = true;
+                break;
+              }
+            }
+            if (hasNonFallback) {
+              if (fallbackFR) fallbackFR.style.display = 'none';
+              if (fallbackEN) fallbackEN.style.display = 'none';
+            } else {
+              // Sinon, afficher le fallback
+              showFallback();
+            }
+          }
+        });
+      });
+      
+      observer.observe(container, { childList: true, subtree: true });
     });
   </script>
 </body>
