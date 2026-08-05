@@ -184,13 +184,10 @@
       <!-- Wrapper requis pour la gestion de la bordure tournante autonome -->
       <div class="conteneur-introduction">
         <div class="bloc-introduction">
+          <!-- Le texte par défaut est directement dans le HTML -->
           <div id="texteAproposEntreprise" data-cle-i18n="accueil_apropos_texte" class="texte-introduction">
-            {{#if texteAproposEntreprise}}
-              {{{texteAproposEntreprise}}}
-            {{else}}
-              <p>Depuis Octobre 2020, <strong>HI CONSULTING IMMIGRATION</strong> accompagne ceux et celles qui rêvent de bâtir leur avenir au Canada à travers des procédures de : Résidence Permanente, Études, Permis de Travail et Visa Visiteur. Basé à Douala, nous sommes un cabinet d'immigration de confiance, reconnu pour notre efficacité, notre transparence et la qualité de notre accompagnement de A à Z.</p>
-              <p>Notre particularité se retrouve dans une approche personnalisée du voyage. Nous travaillons main dans la main avec chaque client pour concevoir un projet d'immigration qui répond à ses attentes. Au-delà du Visa, nous assurons aussi un <strong>suivi post-visa</strong> pour une intégration réussie. <strong>HI CONSULTING IMMIGRATION</strong> : votre projet, notre engagement.</p>
-            {{/if}}
+            <p>Depuis Octobre 2020, <strong>HI CONSULTING IMMIGRATION</strong> accompagne ceux et celles qui rêvent de bâtir leur avenir au Canada à travers des procédures de : Résidence Permanente, Études, Permis de Travail et Visa Visiteur. Basé à Douala, nous sommes un cabinet d'immigration de confiance, reconnu pour notre efficacité, notre transparence et la qualité de notre accompagnement de A à Z.</p>
+            <p>Notre particularité se retrouve dans une approche personnalisée du voyage. Nous travaillons main dans la main avec chaque client pour concevoir un projet d'immigration qui répond à ses attentes. Au-delà du Visa, nous assurons aussi un <strong>suivi post-visa</strong> pour une intégration réussie. <strong>HI CONSULTING IMMIGRATION</strong> : votre projet, notre engagement.</p>
           </div>
         </div>
       </div>
@@ -282,5 +279,17 @@
   {{> _pied.html}}
   <script src="/static/js/typewriter.js"></script>
   <script src="/static/js/accueil.js"></script>
+  
+  <!-- Script pour gérer le fallback du texte d'introduction -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Récupérer l'élément du texte d'introduction
+      var texteElement = document.getElementById('texteAproposEntreprise');
+      
+      // Si l'élément existe et qu'il est vide, on garde le texte par défaut
+      // Le texte par défaut est déjà dans le HTML, donc on ne fait rien de spécial
+      // Le système de traduction gérera la traduction via data-cle-i18n
+    });
+  </script>
 </body>
 </html>
