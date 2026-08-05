@@ -288,98 +288,113 @@
   <script src="/static/js/typewriter.js"></script>
   <script src="/static/js/accueil.js"></script>
   
-  <!-- Script pour gérer le fallback du texte d'introduction -->
+  <!-- Script simplifié pour gérer le fallback du texte d'introduction -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       var container = document.getElementById('texteAproposEntreprise');
       var fallbackFR = document.getElementById('fallbackFR');
       var fallbackEN = document.getElementById('fallbackEN');
       
+      // Sauvegarder le contenu des fallbacks
+      var fallbackFRContent = fallbackFR ? fallbackFR.innerHTML : '';
+      var fallbackENContent = fallbackEN ? fallbackEN.innerHTML : '';
+      
       // Fonction pour détecter la langue actuelle
       function getCurrentLanguage() {
-        // Vérifier si le système de traduction a une langue stockée
         var lang = document.documentElement.lang || 'fr';
-        
-        // Vérifier si un sélecteur de langue est présent
         var langSelector = document.querySelector('[data-lang]');
         if (langSelector) {
           return langSelector.getAttribute('data-lang');
         }
-        
-        // Vérifier dans l'URL ou les cookies si nécessaire
+        // Vérifier si un élément de sélection de langue existe
+        var langSelect = document.querySelector('select[name="lang"]');
+        if (langSelect) {
+          return langSelect.value;
+        }
         return lang;
+      }
+      
+      // Fonction pour vérifier si le contenu du backend est vide
+      function isBackendEmpty() {
+        // Récupérer tous les enfants du container
+        var children = container.children;
+        
+        // Si le container n'a pas d'enfants, il est vide
+        if (children.length === 0) return true;
+        
+        // Vérifier si tous les enfants sont des fallbacks
+        var allAreFallbacks = true;
+        for (var i = 0; i < children.length; i++) {
+          if (!children[i].classList || !children[i].classList.contains('texte-fallback')) {
+            allAreFallbacks = false;
+            break;
+          }
+        }
+        
+        // Si tous les enfants sont des fallbacks, le backend est vide
+        if (allAreFallbacks) return true;
+        
+        // Vérifier si le contenu est vide ou ne contient que des espaces
+        var textContent = container.textContent.trim();
+        if (!textContent) return true;
+        
+        return false;
       }
       
       // Fonction pour afficher le fallback approprié
       function showFallback() {
         var currentLang = getCurrentLanguage();
         
-        // Cacher les deux fallbacks
-        if (fallbackFR) fallbackFR.style.display = 'none';
-        if (fallbackEN) fallbackEN.style.display = 'none';
+        // Vider le container
+        container.innerHTML = '';
         
-        // Afficher le fallback correspondant à la langue
-        if (currentLang === 'en' && fallbackEN) {
-          fallbackEN.style.display = 'block';
-        } else if (fallbackFR) {
-          fallbackFR.style.display = 'block';
+        // Créer un div pour le fallback
+        var fallbackDiv = document.createElement('div');
+        
+        if (currentLang === 'en' && fallbackENContent) {
+          fallbackDiv.innerHTML = fallbackENContent;
+        } else {
+          fallbackDiv.innerHTML = fallbackFRContent;
         }
+        
+        // Ajouter le fallback au container
+        container.appendChild(fallbackDiv);
       }
       
-      // Vérifier si le contenu est vide (backend n'a pas fourni de texte)
-      // On vérifie si le container n'a que des enfants qui sont les fallbacks
-      function hasOnlyFallbacks() {
-        var children = container.children;
-        var fallbackCount = 0;
-        for (var i = 0; i < children.length; i++) {
-          if (children[i].classList && children[i].classList.contains('texte-fallback')) {
-            fallbackCount++;
-          } else {
-            // Si un enfant n'est pas un fallback, c'est que le backend a fourni du contenu
-            return false;
-          }
-        }
-        // Si tous les enfants sont des fallbacks, alors le backend est vide
-        return fallbackCount > 0;
-      }
-      
-      // Si le container est vide ou n'a que des fallbacks, afficher le fallback approprié
-      if (!container.innerHTML.trim() || hasOnlyFallbacks()) {
+      // Vérifier si le backend est vide et afficher le fallback si nécessaire
+      if (isBackendEmpty()) {
         showFallback();
       }
       
-      // Écouter les changements de langue (si votre système de traduction déclenche des événements)
-      document.addEventListener('languageChanged', function(e) {
-        if (hasOnlyFallbacks()) {
+      // Observer les changements pour détecter quand le backend modifie le contenu
+      var observer = new MutationObserver(function() {
+        if (isBackendEmpty()) {
+          // Si le backend est vide, afficher le fallback
           showFallback();
+        } else {
+          // Si le backend a du contenu, on le laisse
+          // Mais on s'assure que les fallbacks sont cachés
+          var children = container.children;
+          for (var i = 0; i < children.length; i++) {
+            if (children[i].classList && children[i].classList.contains('texte-fallback')) {
+              children[i].style.display = 'none';
+            }
+          }
         }
       });
       
-      // Observer les changements de contenu (pour détecter quand le backend charge du contenu)
-      var observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-          if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-            // Si du contenu a été ajouté par le backend, cacher les fallbacks
-            var hasNonFallback = false;
-            var children = container.children;
-            for (var i = 0; i < children.length; i++) {
-              if (!children[i].classList || !children[i].classList.contains('texte-fallback')) {
-                hasNonFallback = true;
-                break;
-              }
-            }
-            if (hasNonFallback) {
-              if (fallbackFR) fallbackFR.style.display = 'none';
-              if (fallbackEN) fallbackEN.style.display = 'none';
-            } else {
-              // Sinon, afficher le fallback
-              showFallback();
-            }
-          }
-        });
+      observer.observe(container, { 
+        childList: true, 
+        subtree: true,
+        characterData: true
       });
       
-      observer.observe(container, { childList: true, subtree: true });
+      // Écouter les changements de langue
+      document.addEventListener('languageChanged', function() {
+        if (isBackendEmpty()) {
+          showFallback();
+        }
+      });
     });
   </script>
 </body>
