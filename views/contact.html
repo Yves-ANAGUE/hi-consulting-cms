@@ -6,6 +6,15 @@
   {{balisesMeta}}
   <link rel="icon" href="/static/images/logo_HICI.jpg">
   <link rel="stylesheet" href="/static/css/style.css">
+  
+  <style>
+    /* Mettre les titres en majuscules */
+    .entete-page h1,
+    .colonne-infos-contact h2,
+    .colonne-formulaire-contact h2 {
+      text-transform: uppercase;
+    }
+  </style>
 </head>
 <body>
   {{> _entete.html}}
@@ -13,13 +22,13 @@
   <main>
     <section class="entete-page conteneur section-avec-formes">
       <div class="forme-decorative forme-cercle" style="width:170px;height:170px;background:var(--degrade-nuit);top:-40px;right:10%;opacity:0.12;"></div>
-      <h1 data-cle-i18n="contact_titre_page">Contactez-nous</h1>
+      <h1 data-cle-i18n="contact_titre_page">CONTACTEZ-NOUS</h1>
       <p data-cle-i18n="contact_sous_titre">Une évaluation gratuite et sans engagement de votre projet d'immigration.</p>
     </section>
 
     <section class="conteneur grille-contact section-sans-haut">
       <div class="colonne-infos-contact">
-        <h2 data-cle-i18n="contact_infos_titre">Nos coordonnées</h2>
+        <h2 data-cle-i18n="contact_infos_titre">NOS COORDONNÉES</h2>
         <ul class="liste-contact liste-contact-grande">
           <li>
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.4-7-11a7 7 0 1 1 14 0c0 4.6-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
@@ -61,7 +70,7 @@
       </div>
 
       <div class="colonne-formulaire-contact">
-        <h2 data-cle-i18n="contact_formulaire_titre">Formulaire d'évaluation préliminaire</h2>
+        <h2 data-cle-i18n="contact_formulaire_titre">FORMULAIRE D'ÉVALUATION PRÉLIMINAIRE</h2>
         <form id="formulaireEvaluationContact" class="formulaire-evaluation">
           <input type="text" name="nomComplet" data-placeholder-i18n="ph_nom_complet" placeholder="Nom complet" required>
           <input type="email" name="email" data-placeholder-i18n="ph_email" placeholder="Adresse email" required>
