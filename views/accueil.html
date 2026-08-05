@@ -175,19 +175,20 @@
       <!-- Wrapper requis pour la gestion de la bordure tournante autonome -->
       <div class="conteneur-introduction">
         <div class="bloc-introduction">
-          <!-- Version française par défaut -->
-          <p class="texte-intro-fr" data-cle-i18n="accueil_apropos_texte_1">
-            Depuis Octobre 2020, <strong>HI CONSULTING IMMIGRATION</strong> accompagne ceux et celles qui rêvent de bâtir leur avenir au Canada à travers des procédures de : Résidence Permanente, Études, Permis de Travail et Visa Visiteur. Basé à Douala, nous sommes un cabinet d'immigration de confiance, reconnu pour notre efficacité, notre transparence et la qualité de notre accompagnement de A à Z.
+          <!-- Le texte est maintenant géré par le backend via les variables, avec fallback si vide -->
+          <p id="texteAproposEntreprise" data-cle-i18n="accueil_apropos_texte">
+            {{#if texteAproposEntreprise}}
+              {{{texteAproposEntreprise}}}
+            {{else}}
+              Depuis Octobre 2020, <strong>HI CONSULTING IMMIGRATION</strong> accompagne ceux et celles qui rêvent de bâtir leur avenir au Canada à travers des procédures de : Résidence Permanente, Études, Permis de Travail et Visa Visiteur. Basé à Douala, nous sommes un cabinet d'immigration de confiance, reconnu pour notre efficacité, notre transparence et la qualité de notre accompagnement de A à Z.
+            {{/if}}
           </p>
-          <p class="texte-intro-fr" data-cle-i18n="accueil_apropos_texte_2">
-            Notre particularité se retrouve dans une approche personnalisée du voyage. Nous travaillons main dans la main avec chaque client pour concevoir un projet d'immigration qui répond à ses attentes. Au-delà du Visa, nous assurons aussi un <strong>suivi post-visa</strong> pour une intégration réussie. <strong>HI CONSULTING IMMIGRATION</strong> : votre projet, notre engagement.
-          </p>
-          <!-- Version anglaise (sera affichée lors de la traduction) -->
-          <p class="texte-intro-en" data-cle-i18n="accueil_apropos_texte_1_en" style="display:none;">
-            Since October 2020, <strong>HI CONSULTING IMMIGRATION</strong> has been supporting those who dream of building their future in Canada through procedures for: Permanent Residence, Studies, Work Permits and Visitor Visas. Based in Douala, we are a trusted immigration firm, recognized for our efficiency, transparency and the quality of our support from A to Z.
-          </p>
-          <p class="texte-intro-en" data-cle-i18n="accueil_apropos_texte_2_en" style="display:none;">
-            Our particularity lies in a personalized approach to the journey. We work hand in hand with each client to design an immigration project that meets their expectations. Beyond the Visa, we also provide <strong>post-visa follow-up</strong> for successful integration. <strong>HI CONSULTING IMMIGRATION</strong>: your project, our commitment.
+          <p id="texteAproposEntreprise2" data-cle-i18n="accueil_apropos_texte_2">
+            {{#if texteAproposEntreprise2}}
+              {{{texteAproposEntreprise2}}}
+            {{else}}
+              Notre particularité se retrouve dans une approche personnalisée du voyage. Nous travaillons main dans la main avec chaque client pour concevoir un projet d'immigration qui répond à ses attentes. Au-delà du Visa, nous assurons aussi un <strong>suivi post-visa</strong> pour une intégration réussie. <strong>HI CONSULTING IMMIGRATION</strong> : votre projet, notre engagement.
+            {{/if}}
           </p>
         </div>
       </div>
@@ -279,33 +280,5 @@
   {{> _pied.html}}
   <script src="/static/js/typewriter.js"></script>
   <script src="/static/js/accueil.js"></script>
-  <script>
-    // Script pour gérer l'affichage des versions française/anglaise du texte d'introduction
-    document.addEventListener('DOMContentLoaded', function() {
-      // Fonction pour basculer entre les versions française et anglaise
-      function basculerLangueIntro(langue) {
-        var textesFR = document.querySelectorAll('.texte-intro-fr');
-        var textesEN = document.querySelectorAll('.texte-intro-en');
-        
-        if (langue === 'en') {
-          textesFR.forEach(function(el) { el.style.display = 'none'; });
-          textesEN.forEach(function(el) { el.style.display = 'block'; });
-        } else {
-          textesFR.forEach(function(el) { el.style.display = 'block'; });
-          textesEN.forEach(function(el) { el.style.display = 'none'; });
-        }
-      }
-
-      // Vérifier la langue actuelle (à adapter selon votre système de traduction)
-      // Si vous utilisez un sélecteur de langue, vous pouvez l'appeler ici
-      // Exemple : si la page est en anglais, appeler basculerLangueIntro('en')
-      
-      // Par défaut, on affiche le français
-      basculerLangueIntro('fr');
-      
-      // Si vous avez un mécanisme de traduction, vous pouvez ajouter un écouteur
-      // pour basculer quand la langue change
-    });
-  </script>
 </body>
 </html>
